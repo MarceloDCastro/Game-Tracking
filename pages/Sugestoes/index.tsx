@@ -1,6 +1,6 @@
 
 
-import { Mail, MailOutline, Message, MessageOutlined, Phone } from '@mui/icons-material';
+import { Mail, MailOutline, Message, MessageOutlined, Phone, Send } from '@mui/icons-material';
 import { Typography, Grid, TextField, Button, Link, TextareaAutosize, Stack, Box } from '@mui/material';
 import InputComponent from '../../components/InputComponent';
 
@@ -27,7 +27,7 @@ function Sugestao() {
             </Grid>
           </Grid>
           <Stack direction='row' justifyContent='center' mt={4}>
-            <Button variant='contained'>
+            <Button variant='contained' startIcon={<Send />}>
               Enviar
             </Button>
           </Stack>

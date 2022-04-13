@@ -1,122 +1,37 @@
 
 
-import { Typography, Grid, TextField, Button, Link, TextareaAutosize } from '@mui/material';
-
-import Box from '@mui/material/Box';
+import { Mail, MailOutline, Message, MessageOutlined, Phone } from '@mui/icons-material';
+import { Typography, Grid, TextField, Button, Link, TextareaAutosize, Stack, Box } from '@mui/material';
+import InputComponent from '../../components/InputComponent';
 
 import PageComponent from '../../components/PageComponent';
+import TextAreaComponent from '../../components/TextAreaComponent';
 
 
 function Sugestao() {
 
-
-
   return (
-
-
-
-    
       <PageComponent title="Sugestões">
-      <Grid className="form-container" container spacing={2}>
-
-        <Grid md={6} xs={12} item >
-
-          <Typography variant="body1" align="left" pb={1} >Nome:</Typography>
-
-          <Grid md={12} item >
-            <Box sx={{ boxShadow: 2 }}>
-              <TextField
-                InputProps={{
-                  disableUnderline: true,
-                }}
-                className="entrada"
-                fullWidth={true}
-                size="small"
-                variant="standard"
-              />
-            </Box>
+          <Grid container columnSpacing={{ xs: '10%', lg: '5%'}} rowSpacing={3} pt={1}>
+            <Grid item xs={12} sm={6} lg={4}>
+              <InputComponent label='E-mail' icon={<Mail />} />
+            </Grid>
+            <Grid item xs={12} sm={6} lg={4}>
+              <InputComponent label='Telefone' icon={<Phone />} />
+            </Grid>
+            <Grid item xs={12} sm={12} lg={4}>
+              <InputComponent label='Assunto' icon={<Mail />} />
+            </Grid>
+            <Grid item xs={12}>
+              <TextAreaComponent label='Mensagem' icon={<Message />} />
+            </Grid>
           </Grid>
-
-        </Grid>
-
-
-
-        <Grid md={6} xs={12} item >
-
-          <Typography variant="body1" align="left" pb={1} >Email:</Typography>
-
-          <Grid md={12} item >
-            <Box sx={{ boxShadow: 2 }}>
-              <TextField
-                InputProps={{
-                  disableUnderline: true,
-                }}
-                className="entrada"
-                fullWidth={true}
-                size="small"
-                variant="standard"
-              />
-            </Box>
-          </Grid>
-
-        </Grid>
-
-
-
-        <Grid md={6} xs={12} item >
-
-          <Typography variant="body1" align="left" pb={1} >Telefone (opcional):</Typography>
-
-          <Grid md={12} item >
-            <Box sx={{ boxShadow: 2 }}>
-              <TextField
-                InputProps={{
-                  disableUnderline: true,
-                }}
-                className="entrada"
-                fullWidth={true}
-                size="small"
-                variant="standard"
-              />
-            </Box>
-          </Grid>
-
-          <Grid md={12} item mt={7}  >
-            <div className="enviar" >
-              <Button style={{ background: "#97A8FF", color: "#000" }} variant="contained">Enviar</Button>
-            </div>
-          </Grid>
-
-        </Grid>
-
-
-        <Grid md={6} xs={12} item >
-
-          <Typography variant="body1" align="left" pb={1} >Mensagem:</Typography>
-
-          <Grid md={12} item >
-            <Box sx={{ boxShadow: 2 }}>
-              <TextField
-                InputProps={{
-                  disableUnderline: true,
-                }}
-                className="entrada"
-                fullWidth={true}
-                size="small"
-                variant="standard"
-                multiline
-                rows={5}
-              />
-            </Box>
-          </Grid>
-
-        </Grid>
-
-
-
-      </Grid>
+          <Stack direction='row' justifyContent='center' mt={4}>
+            <Button variant='contained'>
+              Enviar
+            </Button>
+          </Stack>
       </PageComponent>
-
   );
 }
 

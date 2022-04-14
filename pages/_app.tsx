@@ -7,8 +7,10 @@ import { AppThemeProvider } from '../context/ThemeContext'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AppThemeProvider>
+      <Box width='100vw' height='100vh'>
         <NavBar />
         <Component {...pageProps} />
+      </Box>
     </AppThemeProvider>
   )
 }

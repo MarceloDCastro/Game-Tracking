@@ -28,13 +28,13 @@ const NavBar = () => {
     return (
         <Stack direction='row' bgcolor={mode == 'light' ? Pallete.light.fundo2.main : Pallete.dark.fundo2.main} p={2} justifyContent='space-between' alignItems='center'>
                 <Stack direction='row'>
-                    <Typography fontSize={35} fontWeight='bold' sx={{
+                    <Typography component='h1' fontSize={35} fontWeight='bold' sx={{
                         backgroundImage: `linear-gradient(19deg, #21D4FD, #B721FF)`,
                     }} className={styles.gradiente}>GameTracking</Typography>
                 </Stack>
                 <Stack direction='row' display={{xs: 'none', md:'flex'}}>
                     <Stack direction='row'>
-                        <Button size="large" href="/Home">Home</Button>
+                        <Button size="large" href="/">Home</Button>
                         <Button size="large" href="/Sobre">Sobre Nós</Button>
                         <Button size="large" href="/Sugestoes">Sugestões</Button>
                         <Box alignItems='center' display='flex'>

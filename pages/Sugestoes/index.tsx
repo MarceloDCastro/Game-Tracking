@@ -11,8 +11,9 @@ import TextAreaComponent from '../../components/TextAreaComponent';
 function Sugestao() {
 
   return (
-      <PageComponent title="Sugestões">
-          <Grid container columnSpacing={{ xs: '10%', lg: '5%'}} rowSpacing={3} pt={1}>
+    <Stack alignItems='center'>
+      <PageComponent title="Sugestões" sx={{ width: '60%', minWidth: '320px' }}>
+          <Grid container columnSpacing={{ xs: '7%', lg: '5%'}} rowSpacing={3} pt={1}>
             <Grid item xs={12} sm={6} lg={4}>
               <InputComponent label='E-mail' icon={<Mail />} />
             </Grid>
@@ -32,6 +33,7 @@ function Sugestao() {
             </Button>
           </Stack>
       </PageComponent>
+    </Stack>
   );
 }
 

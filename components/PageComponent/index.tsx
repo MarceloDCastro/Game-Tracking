@@ -1,23 +1,25 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack, SxProps, Typography } from '@mui/material';
 import React from 'react';
 import { useAppThemeContext, Pallete } from '../../context/ThemeContext';
+import TitleComponent from '../TitleComponent';
 
 interface IGenericPage {
     children: React.ReactNode;
     title?: string;
     rightElement?: React.ReactNode;
+    sx?: SxProps;
 }
 
-const GenericPage = ({ children, title, rightElement }: IGenericPage) => {
+const GenericPage = ({children, title, rightElement, sx}: IGenericPage) => {
     const { mode } = useAppThemeContext();
     return (
-        <Box bgcolor={mode == 'light' ? Pallete.light.fundo2.main : Pallete.dark.fundo2.main} p={5} m={{ xs: 2, sm: 5, lg: 7, xl: 10 }} boxShadow="0 3px 5px #00000040" borderRadius={2}>
-            <Stack direction="row" alignItems='center'>
-                <Typography fontSize={30} fontWeight='bold' mr={2}>{title}</Typography>
-                {rightElement}
-            </Stack>
-            {children}
-        </Box>
+            <Box component='main' sx={sx} bgcolor={mode == 'light' ? Pallete.light.fundo2.main : Pallete.dark.fundo2.main} p={5} m={{ xs: 2, sm: 5, lg: 7, xl: 10 }} boxShadow="0 3px 5px #00000040" borderRadius={5}>
+                <Stack direction="row" alignItems='center'>
+                    {title && <TitleComponent title={title} type='h1' sx={{ mr: 2 }} />}
+                    {rightElement}
+                </Stack>
+                {children}
+            </Box>
     )
 }
 

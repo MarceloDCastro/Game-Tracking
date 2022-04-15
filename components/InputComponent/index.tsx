@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { Card, CardMedia, Typography, CardContent, Button, Badge, IconButton, Stack, Tooltip, Zoom, Box, TextField } from '@mui/material';
-import { FavoriteBorderOutlined, Favorite } from '@mui/icons-material';
-import { useAppThemeContext, Pallete } from '../../context/ThemeContext';
+import React from 'react'
+import { Box, TextField } from '@mui/material'
 
 interface IInputComponent {
     label: string;
@@ -10,9 +8,8 @@ interface IInputComponent {
     onChange?: (e: Event) => void;
 }
 
-const InputComponent = ({label, icon, value, onChange}: IInputComponent) => {
-
-    return (
+const InputComponent = ({ label, icon, value, onChange }: IInputComponent) => {
+  return (
       <TextField
       fullWidth
       label={
@@ -22,7 +19,7 @@ const InputComponent = ({label, icon, value, onChange}: IInputComponent) => {
       }
       variant='standard'
       />
-    )
+  )
 }
 
-export default InputComponent;
+export default InputComponent

@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { Card, CardMedia, Typography, CardContent, Button, Badge, IconButton, Stack, Tooltip, Zoom, Box, TextField } from '@mui/material';
-import { FavoriteBorderOutlined, Favorite } from '@mui/icons-material';
-import { useAppThemeContext, Pallete } from '../../context/ThemeContext';
+import React from 'react'
+import { Box, TextField } from '@mui/material'
 
 interface ITextAreaComponent {
     label: string;
@@ -10,9 +8,8 @@ interface ITextAreaComponent {
     onChange?: (e: Event) => void;
 }
 
-const TextAreaComponent = ({label, icon, value, onChange}: ITextAreaComponent) => {
-
-    return (
+const TextAreaComponent = ({ label, icon, value, onChange }: ITextAreaComponent) => {
+  return (
       <TextField
               fullWidth
               multiline
@@ -24,7 +21,7 @@ const TextAreaComponent = ({label, icon, value, onChange}: ITextAreaComponent) =
               }
               variant='outlined'
               />
-    )
+  )
 }
 
-export default TextAreaComponent;
+export default TextAreaComponent

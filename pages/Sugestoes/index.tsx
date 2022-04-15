@@ -1,19 +1,16 @@
 
+import { Mail, Message, Phone, Send } from '@mui/icons-material'
+import { Grid, Button, Stack } from '@mui/material'
+import InputComponent from '../../components/InputComponent'
 
-import { Mail, MailOutline, Message, MessageOutlined, Phone, Send } from '@mui/icons-material';
-import { Typography, Grid, TextField, Button, Link, TextareaAutosize, Stack, Box } from '@mui/material';
-import InputComponent from '../../components/InputComponent';
+import PageComponent from '../../components/PageComponent'
+import TextAreaComponent from '../../components/TextAreaComponent'
 
-import PageComponent from '../../components/PageComponent';
-import TextAreaComponent from '../../components/TextAreaComponent';
-
-
-function Sugestao() {
-
+function Sugestao () {
   return (
     <Stack alignItems='center'>
       <PageComponent title="Sugestões" sx={{ width: '60%', minWidth: '320px' }}>
-          <Grid container columnSpacing={{ xs: '7%', lg: '5%'}} rowSpacing={3} pt={1}>
+          <Grid container columnSpacing={{ xs: '7%', lg: '5%' }} rowSpacing={3} pt={1}>
             <Grid item xs={12} sm={6} lg={4}>
               <InputComponent label='E-mail' icon={<Mail />} />
             </Grid>
@@ -34,7 +31,7 @@ function Sugestao() {
           </Stack>
       </PageComponent>
     </Stack>
-  );
+  )
 }
 
-export default Sugestao;
+export default Sugestao

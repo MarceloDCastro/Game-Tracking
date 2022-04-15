@@ -1,20 +1,13 @@
 
+import { Grid, Button, Stack } from '@mui/material'
 
-import { Typography, Grid, TextField, Button, Link, Stack } from '@mui/material';
+import { Mail, Phone, Password, Badge, PersonAddAlt } from '@mui/icons-material'
 
-import { Mail, MailOutline, Message, MessageOutlined, Phone, Send, Password, Badge, PersonAddAlt} from '@mui/icons-material';
-import LoginIcon from '@mui/icons-material/Login';
-
-import InputComponent from '../../components/InputComponent';
+import InputComponent from '../../components/InputComponent'
 import PageComponent from '../../components/PageComponent'
 
-import Box from '@mui/material/Box';
-
-function Cadastro() {
-
-
+function Cadastro () {
   return (
-
 
     <PageComponent title="Cadastro">
       <Grid container columnSpacing={{ xs: '10%', lg: '5%' }} rowSpacing={3} pt={1}>
@@ -41,9 +34,7 @@ function Cadastro() {
       </Stack>
     </PageComponent>
 
-  );
+  )
 }
 
-
-
-export default Cadastro;
+export default Cadastro

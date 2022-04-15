@@ -1,15 +1,12 @@
 
-import { Typography, Grid, TextField, Button, Link, Stack } from '@mui/material';
-import { Mail, MailOutline, Message, MessageOutlined, Phone, Send, Password} from '@mui/icons-material';
-import LoginIcon from '@mui/icons-material/Login';
-import Box from '@mui/material/Box';
+import { Grid, Button, Stack } from '@mui/material'
+import { Mail, Password } from '@mui/icons-material'
+import LoginIcon from '@mui/icons-material/Login'
 
-import InputComponent from '../../components/InputComponent';
+import InputComponent from '../../components/InputComponent'
 import PageComponent from '../../components/PageComponent'
-  ;
 
-function Login() {
-
+function Login () {
   return (
 
     <PageComponent title="Logar">
@@ -27,9 +24,7 @@ function Login() {
         </Button>
       </Stack>
     </PageComponent>
-  );
+  )
 }
 
-
-
-export default Login;
+export default Login

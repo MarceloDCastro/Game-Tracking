@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { Card, CardMedia, Typography, CardContent, Button, Badge, IconButton, Stack, Tooltip, Zoom, Box } from '@mui/material';
-import { FavoriteBorderOutlined, Favorite } from '@mui/icons-material';
-import { useAppThemeContext, Pallete } from '../../context/ThemeContext';
+import React, { useState } from 'react'
+import { Card, CardMedia, Typography, CardContent, Button, Badge, IconButton, Stack, Tooltip, Zoom } from '@mui/material'
+import { FavoriteBorderOutlined, Favorite } from '@mui/icons-material'
 
 interface ICardComponent {
     cd_Publicacao?: number;
@@ -13,11 +12,10 @@ interface ICardComponent {
     link: string;
 }
 
-const CardComponent = ({titulo, descricao, data, tipo, imagem, link}: ICardComponent) => {
-  const { mode } = useAppThemeContext();
-    const [liked, setLiked] = useState<boolean>(false);
+const CardComponent = ({ titulo, descricao, data, tipo, imagem, link }: ICardComponent) => {
+  const [liked, setLiked] = useState<boolean>(false)
 
-    return (
+  return (
     <Card sx={{ borderRadius: 3, boxShadow: '0 3px 5px #00000040' }}>
       <CardMedia
         component="img"
@@ -29,7 +27,7 @@ const CardComponent = ({titulo, descricao, data, tipo, imagem, link}: ICardCompo
           {tipo}
       </Typography>
       <CardContent>
-          
+
         <Typography variant="h5" component="div">
           {titulo}
         </Typography>
@@ -37,13 +35,13 @@ const CardComponent = ({titulo, descricao, data, tipo, imagem, link}: ICardCompo
           {data}
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          {descricao.length > 100 &&  descricao.substring(0,100) + '...'}
+          {descricao.length > 100 && descricao.substring(0, 100) + '...'}
         </Typography>
         <Stack direction="row" justifyContent="end">
             <Tooltip title="Curtir" placement="left" TransitionComponent={Zoom} arrow>
             <Badge badgeContent='5.3k' color="secondary" anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+              vertical: 'top',
+              horizontal: 'left'
             }}>
             <IconButton onClick={() => setLiked(!liked)}>
                 {liked ? <Favorite color='error' /> : <FavoriteBorderOutlined />}
@@ -54,7 +52,7 @@ const CardComponent = ({titulo, descricao, data, tipo, imagem, link}: ICardCompo
         <Button variant='contained' href={link} fullWidth sx={{ mt: 1 }}>Ver Mais</Button>
       </CardContent>
     </Card>
-    )
+  )
 }
 
-export default CardComponent;
+export default CardComponent

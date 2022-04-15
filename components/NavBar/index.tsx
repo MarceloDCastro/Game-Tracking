@@ -3,6 +3,7 @@ import { Stack, Typography, Button, IconButton, Avatar, Box , Menu, MenuItem, Di
 import { Settings, Logout, LightMode, DarkMode } from '@mui/icons-material';
 import styles from '../../styles/Geral.module.css';
 import { useAppThemeContext, Pallete } from '../../context/ThemeContext';
+import Link from 'next/link';
 
 const NavBar = () => {
   const { toggleMode, mode } = useAppThemeContext();
@@ -34,9 +35,9 @@ const NavBar = () => {
                 </Stack>
                 <Stack direction='row' display={{xs: 'none', md:'flex'}}>
                     <Stack direction='row'>
-                        <Button size="large" href="/">Home</Button>
-                        <Button size="large" href="/Sobre">Sobre Nós</Button>
-                        <Button size="large" href="/Sugestoes">Sugestões</Button>
+                        <Link href="/"><Button size="large">Home</Button></Link>
+                        <Link href="/Sobre"><Button size="large">Sobre Nós</Button></Link>
+                        <Link href="/Sugestoes"><Button size="large">Sugestões</Button></Link>
                         <Box alignItems='center' display='flex'>
                             <IconButton color='primary' onClick={toggleMode}>{mode == 'light' ? <DarkMode /> : <LightMode />}</IconButton>
                         </Box>
@@ -102,7 +103,7 @@ const NavBar = () => {
                         ) : (
                             <Box>
                                 <Button size="large" onClick={login}>Logar</Button>
-                                <Button size="large" href="/Cadastro">Cadastrar</Button>
+                                <Link href='/Cadastro'><Button size="large">Cadastrar</Button></Link>
                             </Box>
                         )                 
                         }

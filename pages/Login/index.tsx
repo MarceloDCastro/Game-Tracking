@@ -1,80 +1,32 @@
 
-import '../App.css';
-
-import { Typography, Grid, TextField, Button, Link } from '@mui/material';
-
+import { Typography, Grid, TextField, Button, Link, Stack } from '@mui/material';
+import { Mail, MailOutline, Message, MessageOutlined, Phone, Send, Password} from '@mui/icons-material';
+import LoginIcon from '@mui/icons-material/Login';
 import Box from '@mui/material/Box';
+
+import InputComponent from '../../components/InputComponent';
+import PageComponent from '../../components/PageComponent'
+  ;
 
 function Login() {
 
- 
-
   return (
 
-
-    <div className="App">
-
-      <Typography variant="h4" align="left" ml={1} mt={5} >
-        Logar
-      </Typography>
-
-
-
-      <Grid className="form-container" container spacing={2}>
-
-        <Grid md={12} xs={12} item >
-
-          <Typography variant="body1" align="left" pb={1} >Email:</Typography>
-
-          <Grid md={6} item >
-            <Box sx={{ boxShadow: 2 }}>
-              <TextField
-                InputProps={{
-                  disableUnderline: true,
-                }}
-                className="entrada"
-                fullWidth={true}
-                size="small"
-                variant="standard"
-              />
-            </Box>
-          </Grid>
-
+    <PageComponent title="Logar">
+      <Grid container columnSpacing={{ xs: '10%', lg: '5%' }} rowSpacing={3} pt={1}>
+        <Grid item xs={12} sm={6} lg={4}>
+          <InputComponent label='E-mail' icon={<Mail />} />
         </Grid>
-
-        <Grid md={12} xs={12} item >
-
-          <Typography variant="body1" align="left" pb={1} >Senha:</Typography>
-
-          <Grid md={6} item >
-            <Box sx={{ boxShadow: 2 }}>
-              <TextField
-                InputProps={{
-                  disableUnderline: true,
-                }}
-                className="entrada"
-                fullWidth={true}
-                size="small"
-                variant="standard"
-              />
-            </Box>
-          </Grid>
-
+        <Grid item xs={12} sm={6} lg={4}>
+          <InputComponent label='Senha' icon={<Password />} />
         </Grid>
-
-        <Grid md={12} item >
-          <div className="enviar" >
-            <Button variant="contained">Login</Button>
-            <Link ml={2} href="#" variant="body1">
-              {'Não possuí uma conta ? Cadastrar-se'}
-            </Link>
-          </div>
-        </Grid>
-
       </Grid>
-
-    </div>
-
+      <Stack direction='row' mt={4}>
+        <Button variant='contained' startIcon={<LoginIcon />}>
+          Login
+        </Button>
+      </Stack>
+    </PageComponent>
   );
 }
 

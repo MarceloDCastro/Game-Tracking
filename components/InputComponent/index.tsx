@@ -17,7 +17,7 @@ const InputComponent = ({label, icon, value, onChange}: IInputComponent) => {
       fullWidth
       label={
         <Box display='flex' alignItems='center'>
-          {icon && icon} <Box ml={0.3}>{label}</Box>
+          {icon && icon}  <Box ml={0.3}>{label}</Box>
         </Box>
       }
       variant='standard'

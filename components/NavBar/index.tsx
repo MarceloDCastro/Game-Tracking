@@ -102,7 +102,7 @@ const NavBar = () => {
                         ) : (
                             <Box>
                                 <Button size="large" onClick={login}>Logar</Button>
-                                <Button size="large" href="/Logar">Cadastrar</Button>
+                                <Button size="large" href="/Cadastro">Cadastrar</Button>
                             </Box>
                         )                 
                         }

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import {
-  Box, TextField, Autocomplete, Grid, Fab
+  Box, TextField, Autocomplete, Grid, Fab, Pagination, Stack
 } from '@mui/material'
 import { ArrowUpward } from '@mui/icons-material'
 import PageComponent from '../components/PageComponent'
 import CardComponent from '../components/CardComponent'
 import { IPublicaco } from '../interfaces/Publicacao'
 import { api } from '../services/api'
+import { Pallete } from '../context/ThemeContext'
 
 function Home () {
   const [publicacoes, setPublicacoes] = useState<IPublicaco[]>()
@@ -74,6 +75,9 @@ function Home () {
                 ))
             }
       </Grid>
+      <Stack alignItems='center' mt={5}>
+        <Pagination count={10} shape="rounded" size='large' color='primary' />
+      </Stack>
     </PageComponent>
   )
 }

@@ -13,7 +13,7 @@ const inputOnHover = '#0000001F'
 export const Pallete = {
   light: {
     primary: {
-      main: '#B721FF'
+      main: '#7021d9'
     },
     secondary: {
       main: '#773B80'
@@ -146,7 +146,7 @@ export const AppThemeProvider: React.FC = ({ children }) => {
                 '& fieldset': {
                   borderColor: mode === 'light' ? inputOnHover : '#D1D1D1',
                   borderWidth: 1,
-                  backgroundColor: mode === 'light' ? 'transparent' : '#D1D1D180',
+                  backgroundColor: 'transparent',
                   color: '#fff'
                 },
                 '&:hover fieldset': {

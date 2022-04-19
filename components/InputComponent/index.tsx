@@ -5,7 +5,7 @@ interface IInputComponent {
     label: string;
     icon?: React.ReactNode;
     value?: string;
-    onChange?: (e: Event) => void;
+    onChange?: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
 }
 
 const InputComponent = ({ label, icon, value, onChange }: IInputComponent) => {
@@ -17,6 +17,8 @@ const InputComponent = ({ label, icon, value, onChange }: IInputComponent) => {
           {icon && icon}  <Box ml={0.3}>{label}</Box>
         </Box>
       }
+      value={value}
+      onChange={onChange}
       variant='standard'
       />
   )

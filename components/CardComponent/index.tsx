@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Card, CardMedia, Typography, CardContent, Button, Badge, IconButton, Stack, Tooltip, Zoom } from '@mui/material'
 import { FavoriteBorderOutlined, Favorite } from '@mui/icons-material'
+import moment from 'moment'
+import 'moment/locale/pt'
 
 interface ICardComponent {
-    cd_Publicacao?: number;
     titulo: string;
     descricao: string;
     data: string;
@@ -27,15 +28,14 @@ const CardComponent = ({ titulo, descricao, data, tipo, imagem, link }: ICardCom
           {tipo}
       </Typography>
       <CardContent>
-
-        <Typography variant="h5" component="div">
+        <Typography variant="h5">
           {titulo}
         </Typography>
-        <Typography gutterBottom component="div">
-          {data}
+        <Typography color="text.secondary" gutterBottom>
+          {data && moment(data).locale('pt-br').fromNow()}
         </Typography>
-        <Typography variant="body1" color="text.secondary">
-          {descricao.length > 100 && descricao.substring(0, 100) + '...'}
+        <Typography variant="body1">
+          {descricao.length > 100 ? descricao.substring(0, 100) + '...' : descricao}
         </Typography>
         <Stack direction="row" justifyContent="end">
             <Tooltip title="Curtir" placement="left" TransitionComponent={Zoom} arrow>

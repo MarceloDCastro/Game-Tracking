@@ -6,9 +6,10 @@ interface IInputComponent {
     icon?: React.ReactNode;
     value?: string;
     onChange?: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
+    error?: boolean;
 }
 
-const InputComponent = ({ label, icon, value, onChange }: IInputComponent) => {
+const InputComponent = ({ label, icon, value, onChange, error }: IInputComponent) => {
   return (
       <TextField
       fullWidth
@@ -20,6 +21,7 @@ const InputComponent = ({ label, icon, value, onChange }: IInputComponent) => {
       value={value}
       onChange={onChange}
       variant='standard'
+      error={error}
       />
   )
 }

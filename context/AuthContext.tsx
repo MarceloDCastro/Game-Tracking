@@ -77,7 +77,11 @@ export function AuthProvider ({ children }: AuthProviderProps) {
 
         api.defaults.headers.common.Authorization = `Bearer ${token}`
 
-        setUserInfo(res.data.usuario)
+        // setUserInfo(res.data.usuario)
+        setAlertSettings({
+          message: res.data.mensagem,
+          type: 'success'
+        })
       })
       .catch(err => setAlertSettings({
         message: err.response.data.mensagem,

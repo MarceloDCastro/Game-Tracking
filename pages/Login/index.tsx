@@ -20,7 +20,7 @@ function Login () {
     <PageComponent title="Logar" sx={{ width: '30%', minWidth: '360px' }}>
       <Stack direction='column' spacing={3}>
           <InputComponent label='E-mail' value={email} onChange={(e) => setEmail(e.target.value)} icon={<Mail />} />
-          <InputComponent label='Senha' value={password} onChange={(e) => setPassword(e.target.value)} icon={<Password />} />
+          <InputComponent label='Senha' value={password} onChange={(e) => setPassword(e.target.value)} icon={<Password />} type='password' />
         <Button variant='contained' startIcon={loading ? <CircularProgress size='20px' color='inherit' /> : <LoginIcon />} onClick={() => signIn({ email, password, setLoading })}>
           Login
         </Button>

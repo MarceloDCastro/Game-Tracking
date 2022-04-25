@@ -7,9 +7,10 @@ interface IInputComponent {
     value?: string;
     onChange?: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
     error?: boolean;
+    type?: string;
 }
 
-const InputComponent = ({ label, icon, value, onChange, error }: IInputComponent) => {
+const InputComponent = ({ label, icon, value, onChange, error, type }: IInputComponent) => {
   return (
       <TextField
       fullWidth
@@ -18,6 +19,7 @@ const InputComponent = ({ label, icon, value, onChange, error }: IInputComponent
           {icon && icon}  <Box ml={0.3}>{label}</Box>
         </Box>
       }
+      type={type}
       value={value}
       onChange={onChange}
       variant='standard'

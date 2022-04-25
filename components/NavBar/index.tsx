@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Stack, Typography, Button, IconButton, Avatar, Box, Menu, MenuItem, Divider, ListItemIcon } from '@mui/material'
-import { Settings, Logout, LightMode, DarkMode } from '@mui/icons-material'
+import { Settings, Logout, LightMode, DarkMode, PermIdentityOutlined } from '@mui/icons-material'
 import styles from '../../styles/Geral.module.css'
 import { useAppThemeContext, Pallete } from '../../context/ThemeContext'
 import Link from 'next/link'
@@ -39,7 +39,7 @@ const NavBar = () => {
                             <Box>
                                 <IconButton
                                     onClick={handleClickMenu}>
-                                    <Avatar>M</Avatar>
+                                    <Avatar>{userInfo?.nome[0].toUpperCase()}</Avatar>
                                 </IconButton>
                                 <Menu
                                 anchorEl={anchorEl}
@@ -77,18 +77,26 @@ const NavBar = () => {
                                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                                 >
                                     <MenuItem>
-                                    <Avatar /> Perfil
+                                      <Stack direction='column'>
+                                        <Typography fontWeight='bold'>{userInfo?.nome}</Typography>
+                                        <Typography fontSize={14} color='text.secondary'>{userInfo?.tipo === 3 ? 'Usuário' : userInfo?.tipo === 2 ? 'Editor' : userInfo?.tipo === '' ? 'Admin' : ''}</Typography>
+                                      </Stack>
                                     </MenuItem>
-                                    <Divider />
                                     <MenuItem>
-                                    <ListItemIcon>
-                                        <Settings fontSize="small" />
-                                    </ListItemIcon>
-                                    Configurações
+                                      <ListItemIcon>
+                                        <PermIdentityOutlined />
+                                      </ListItemIcon>
+                                      Editar Perfil
+                                    </MenuItem>
+                                    <MenuItem>
+                                      <ListItemIcon>
+                                          <Settings />
+                                      </ListItemIcon>
+                                      Configurações
                                     </MenuItem>
                                     <MenuItem onClick={signOut}>
                                       <ListItemIcon>
-                                          <Logout fontSize="small" />
+                                          <Logout />
                                       </ListItemIcon>
                                       Sair
                                     </MenuItem>

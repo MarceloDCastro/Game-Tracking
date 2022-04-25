@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import {
-  Box, TextField, Autocomplete, Grid, Fab, Pagination, Stack
+  Box, TextField, Autocomplete, Grid, Fab, Pagination, Stack, IconButton
 } from '@mui/material'
-import { ArrowUpward } from '@mui/icons-material'
+import { ArrowUpward, Search, SearchOutlined } from '@mui/icons-material'
 import PageComponent from '../components/PageComponent'
 import CardComponent from '../components/CardComponent'
 import { IPublicaco } from '../interfaces/Publicacao'
@@ -33,12 +33,21 @@ function Home () {
             freeSolo
             options={publicacoes?.map((publicacao) => publicacao.nome) || []}
             renderInput={(params) => (
-              <Box display="flex" alignItems="center">
-                <TextField
-                  {...params}
-                  label="Pesquisar publicação"
-                />
-              </Box>
+              <TextField
+                {...params}
+                label="Pesquisar publicação"
+                InputProps={{
+                  ...params.InputProps,
+                  endAdornment: (
+                    <>
+                      <IconButton color='primary'>
+                        <Search />
+                      </IconButton>
+                      {params.InputProps.endAdornment}
+                    </>
+                  )
+                }}
+              />
             )}
           />
         </Box>

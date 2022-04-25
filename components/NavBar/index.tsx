@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Stack, Typography, Button, IconButton, Avatar, Box, Menu, MenuItem, Divider, ListItemIcon } from '@mui/material'
 import { Settings, Logout, LightMode, DarkMode } from '@mui/icons-material'
 import styles from '../../styles/Geral.module.css'
 import { useAppThemeContext, Pallete } from '../../context/ThemeContext'
 import Link from 'next/link'
+import { AuthContext } from '../../context/AuthContext'
 
 const NavBar = () => {
   const { toggleMode, mode } = useAppThemeContext()
+  const { isAuthenticated, userInfo, signOut } = useContext(AuthContext)
 
-  const [logado, setLogado] = useState<boolean>(false)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const openMenu = Boolean(anchorEl)
   const handleClickMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -16,14 +17,6 @@ const NavBar = () => {
   }
   const handleCloseMenu = () => {
     setAnchorEl(null)
-  }
-
-  const login = () => {
-    setLogado(true)
-  }
-
-  const logout = () => {
-    setLogado(false)
   }
 
   return (
@@ -41,7 +34,7 @@ const NavBar = () => {
                         <Box alignItems='center' display='flex'>
                             <IconButton color='primary' onClick={toggleMode}>{mode === 'light' ? <DarkMode /> : <LightMode />}</IconButton>
                         </Box>
-                        {logado
+                        {isAuthenticated
                           ? (
                             <Box>
                                 <IconButton
@@ -91,20 +84,20 @@ const NavBar = () => {
                                     <ListItemIcon>
                                         <Settings fontSize="small" />
                                     </ListItemIcon>
-                                    Settings
+                                    Configurações
                                     </MenuItem>
-                                    <MenuItem onClick={logout}>
-                                    <ListItemIcon>
-                                        <Logout fontSize="small" />
-                                    </ListItemIcon>
-                                    Logout
+                                    <MenuItem onClick={signOut}>
+                                      <ListItemIcon>
+                                          <Logout fontSize="small" />
+                                      </ListItemIcon>
+                                      Sair
                                     </MenuItem>
                                 </Menu>
                             </Box>
                             )
                           : (
                             <Box>
-                                <Button size="large" onClick={login}>Logar</Button>
+                                <Link href='/Login'><Button size="large">Logar</Button></Link>
                                 <Link href='/Cadastro'><Button size="large">Cadastrar</Button></Link>
                             </Box>
                             )

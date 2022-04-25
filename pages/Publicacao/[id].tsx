@@ -5,6 +5,7 @@ import PageComponent from '../../components/PageComponent'
 import TitleComponent from '../../components/TitleComponent'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import { Pallete } from '../../context/ThemeContext'
 
 export async function getStaticPaths () {
   const paths = [

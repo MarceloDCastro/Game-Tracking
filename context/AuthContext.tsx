@@ -22,15 +22,11 @@ type AuthContextData = {
     userInfo: UserInfo | undefined;
     isAuthenticated: boolean;
     getUserInfo: () => Promise<void>;
+    signOut: () => Promise<void>;
 }
 
 type AuthProviderProps = {
     children: React.ReactNode;
-}
-
-export async function signOut () {
-  destroyCookie(undefined, 'gameTracking.token')
-  Router.push('/')
 }
 
 export const AuthContext = createContext({} as AuthContextData)
@@ -48,6 +44,8 @@ export function AuthProvider ({ children }: AuthProviderProps) {
     type: 'success'
   })
 
+  useEffect(() => console.log('auth: ', isAuthenticated), [isAuthenticated])
+
   useEffect(() => {
     const { 'gameTracking.token': token } = parseCookies()
     if (token) { getUserInfo() }
@@ -57,6 +55,10 @@ export function AuthProvider ({ children }: AuthProviderProps) {
     if (alertSettings.message !== '') { setShowAlert(true) }
   }, [alertSettings])
 
+  useEffect(() => {
+    console.log('userInfo: ', userInfo)
+  }, [userInfo])
+
   async function getUserInfo () {
     await api.get('usuario/me')
       .then(res => setUserInfo(res.data))
@@ -64,27 +66,33 @@ export function AuthProvider ({ children }: AuthProviderProps) {
   }
 
   async function signIn ({ email, password, setLoading }: SignInCredentials) {
+    if (setLoading) {
+      setLoading(true)
+    }
     api.post('usuario/login', {
       email: email,
       senha: password
     })
       .then(async res => {
         const token: string = res.data.token
-        setCookie(undefined, 'officeSafe.token', token, {
+        setCookie(undefined, 'gameTracking.token', token, {
           maxAge: 60 * 60 * 24 * 5, // 5 days
           path: '/'
         })
 
         api.defaults.headers.common.Authorization = `Bearer ${token}`
 
-        // setUserInfo(res.data.usuario)
+        getUserInfo()
+
         setAlertSettings({
-          message: res.data.mensagem,
+          message: res?.data?.mensagem,
           type: 'success'
         })
+
+        Router.push('/')
       })
       .catch(err => setAlertSettings({
-        message: err.response.data.mensagem,
+        message: err?.response?.data?.mensagem || 'Falha na autenticação!',
         type: 'error'
       }))
       .finally(() => {
@@ -94,8 +102,13 @@ export function AuthProvider ({ children }: AuthProviderProps) {
       })
   }
 
+  async function signOut () {
+    destroyCookie(undefined, 'gameTracking.token')
+    setUserInfo(undefined)
+  }
+
   return (
-    <AuthContext.Provider value={{ signIn, userInfo, isAuthenticated, getUserInfo }}>
+    <AuthContext.Provider value={{ signIn, userInfo, isAuthenticated, getUserInfo, signOut }}>
     <AlertComponent message={alertSettings.message} type={alertSettings.type} showAlert={showAlert} setShowAlert={setShowAlert} />
       {children}
     </AuthContext.Provider>

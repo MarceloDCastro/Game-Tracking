@@ -1,7 +1,8 @@
 
-import { Button, Stack, Box } from '@mui/material'
+import { Button, Stack, Box, CircularProgress } from '@mui/material'
 
 import { Mail, Phone, Password, Badge, PersonAddAlt } from '@mui/icons-material'
+import LoadingButton from '@mui/lab/LoadingButton'
 
 import InputComponent from '../../components/InputComponent'
 import PageComponent from '../../components/PageComponent'
@@ -15,6 +16,8 @@ function Cadastro () {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
   const [confirmSenha, setConfirmSenha] = useState('')
+
+  const [loading, setLoading] = useState(false)
 
   const [showAlert, setShowAlert] = useState(false)
   const [alertSettings, setAlertSettings] = useState<{
@@ -30,11 +33,13 @@ function Cadastro () {
   }, [alertSettings])
 
   const signUp = async () => {
+    setLoading(true)
     if (senha !== confirmSenha) {
-      return setAlertSettings({
+      setAlertSettings({
         message: 'Senhas diferentes!',
         type: 'error'
       })
+      return setLoading(false)
     }
     const objCadastro = {
       nome,
@@ -49,9 +54,10 @@ function Cadastro () {
         type: 'success'
       }))
       .catch(err => setAlertSettings({
-        message: err.response.data.mensagem,
+        message: err.response.data.mensagem || 'Falha na autenticação!',
         type: 'error'
       }))
+      .finally(() => setLoading(false))
   }
 
   return (
@@ -63,7 +69,7 @@ function Cadastro () {
           <InputComponent label='E-mail' value={email} onChange={(e) => setEmail(e.target.value)} icon={<Mail />} />
           <InputComponent label='Senha' value={senha} onChange={(e) => setSenha(e.target.value)} icon={<Password />} />
           <InputComponent label='Confirmar senha' value={confirmSenha} onChange={(e) => setConfirmSenha(e.target.value)} icon={<Password />} error={senha !== confirmSenha} />
-          <Button variant='contained' startIcon={<PersonAddAlt />} onClick={signUp}>
+          <Button variant='contained' startIcon={loading ? <CircularProgress size='20px' color='inherit' /> : <PersonAddAlt />} onClick={signUp}>
             Cadastrar
           </Button>
         </Stack>

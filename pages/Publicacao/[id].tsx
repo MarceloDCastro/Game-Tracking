@@ -64,7 +64,7 @@ export default function Publicacao ({ publicacao }: { publicacao: any }) {
                         </Stack>
                         <Stack ml={2} justifyContent='space-between'>
                             <Box>
-                                <TitleComponent title={publicacao?.nome} />
+                                <TitleComponent title={publicacao?.titulo} />
                                 <Typography sx={{ fontSize: 14, mb: 1 }} color="text.secondary">{publicacao?.data}</Typography>
                                 <Typography>{publicacao?.descricao}</Typography>
                             </Box>

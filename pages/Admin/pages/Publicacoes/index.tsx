@@ -12,6 +12,7 @@ import moment from 'moment'
 import { api } from '../../../../services/api'
 import AlertComponent from '../../../../components/AlertComponent'
 import Link from 'next/link'
+import DropzoneComponent from '../../../../components/DropzoneComponent'
 
 export default function Publicacoes () {
   const [loading, setLoading] = useState(false)
@@ -22,6 +23,9 @@ export default function Publicacoes () {
   const [dataLancamento, setDataLancamento] = useState<Date>()
   const [tipo, setTipo] = useState('')
   const [link, setLink] = useState('')
+  const [imagem, setImagem] = useState('')
+
+  useEffect(() => console.log('img: ', imagem), [imagem])
 
   // DatePicker
   const [anchorEl, setAnchorEl] = useState<Element |((element: Element) => Element) | null | undefined>(null)
@@ -79,7 +83,10 @@ export default function Publicacoes () {
 
   return (
     <PageComponent title='Publicações'>
-      <Stack direction={['column', 'row']} gap={[3, '5%']} pt={1} mb={3}>
+      <Stack justifyContent='center' alignItems='center' mb={3} pt={3}>
+        <DropzoneComponent image={imagem} setImage={setImagem} />
+      </Stack>
+      <Stack direction={['column', 'row']} gap={[3, '5%']} mb={3}>
         <InputComponent label='Título' value={titulo} onChange={e => setTitulo(e.target.value)} icon={<Title />} required />
         <SelectComponent label='Tipo' value={tipo} onChange={e => setTipo(e.target.value)} icon={<InfoOutlined />} required
         options={tiposPublicacao} />
@@ -114,7 +121,6 @@ export default function Publicacoes () {
       <Stack direction={['column', 'row']} mb={3}>
         <TextAreaComponent label='Descrição' value={descricao} onChange={e => setDescricao(e.target.value)} icon={<Description />} required />
       </Stack>
-        <InputComponent label='Link' value={link} onChange={e => setLink(e.target.value)} icon={<LinkIcon />} required />
 
       <Stack direction={['column', 'row']} gap={3} justifyContent='center' alignItems='center'>
       <Link href='/Admin'>

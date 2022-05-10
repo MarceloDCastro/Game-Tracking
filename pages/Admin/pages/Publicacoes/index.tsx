@@ -74,7 +74,7 @@ export default function Publicacoes () {
     api.get('publicacao')
       .then(res => setPublicacoes(res.data))
       .catch(err => setAlertSettings({
-        message: err?.response?.data?.mensagem || 'Falha ao enviar sugestão!',
+        message: err?.response?.data?.mensagem || 'Falha ao buscar publicações!',
         type: 'error'
       }))
       .finally(() => setLoadingGet(false))
@@ -95,7 +95,7 @@ export default function Publicacoes () {
         type: 'success'
       }))
       .catch(err => setAlertSettings({
-        message: err?.response?.data?.mensagem || 'Falha ao enviar sugestão!',
+        message: err?.response?.data?.mensagem || 'Falha ao cadastrar publicação!',
         type: 'error'
       }))
       .finally(() => setLoading(false))

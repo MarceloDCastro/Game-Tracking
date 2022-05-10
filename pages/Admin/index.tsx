@@ -2,10 +2,11 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import DashBoard from './pages/DashBoard'
 import Publicacoes from './pages/Publicacoes'
-import { Group, Newspaper, TipsAndUpdates, Menu, ArrowRight, ArrowLeft } from '@mui/icons-material'
+import { Group, Newspaper, TipsAndUpdates, Menu, ArrowRight, ArrowLeft, Edit } from '@mui/icons-material'
 import { Backdrop, SpeedDial, SpeedDialAction, SwipeableDrawer, Box, Slide, List, ListItem, ListItemIcon, ListItemText, IconButton, Button, Stack } from '@mui/material'
 import { Pallete, useAppThemeContext } from '../../context/ThemeContext'
 import Link from 'next/link'
+import Generos from './pages/Generos'
 
 export default function Admin () {
   const { mode } = useAppThemeContext()
@@ -32,6 +33,10 @@ export default function Admin () {
       label: 'Publicações',
       page: 'Publicacoes',
       icon: <Newspaper color='primary' />
+    }, {
+      label: 'Gêneros',
+      page: 'Generos',
+      icon: <Edit color='primary' />
     }
   ]
 
@@ -89,7 +94,9 @@ export default function Admin () {
             ? <DashBoard itemsArray={itemsArray} />
             : router.query.page === 'Publicacoes'
               ? <Publicacoes />
-              : <DashBoard itemsArray={itemsArray} />
+              : router.query.page === 'Generos'
+                ? <Generos />
+                : <DashBoard itemsArray={itemsArray} />
         }
     </>
   )

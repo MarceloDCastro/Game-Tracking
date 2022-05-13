@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Add, ArrowBack, Edit } from '@mui/icons-material'
-import { Button, CircularProgress, Modal, Stack, Box, Typography, Table, TableHead, TableRow, TableCell, Paper, TableBody, TableContainer, Checkbox } from '@mui/material'
+import { Add, ArrowBack, Clear, Edit, Delete } from '@mui/icons-material'
+import { Button, CircularProgress, Modal, Stack, Box, Typography, Table, TableHead, TableRow, TableCell, Paper, TableBody, TableContainer, Checkbox, IconButton, Tooltip } from '@mui/material'
 import InputComponent from '../../../../components/InputComponent'
 import PageComponent from '../../../../components/PageComponent'
 
@@ -8,13 +8,19 @@ import 'react-day-picker/dist/style.css'
 import { api } from '../../../../services/api'
 import AlertComponent from '../../../../components/AlertComponent'
 import Link from 'next/link'
+import { useAppThemeContext } from '../../../../context/ThemeContext'
+import DialogComponent from '../../../../components/DialogComponent'
 
 export default function Generos () {
+  const { mode } = useAppThemeContext()
+
   const [loading, setLoading] = useState(false)
   const [loadingGet, setLoadingGet] = useState(false)
 
-  const [generos, setGeneros] = useState([])
+  const [generos, setGeneros] = useState<IGenero[]>([])
   const [selectedGeneros, setSelectedGeneros] = useState<number[]>([])
+
+  const [filteredValue, setFilteredValue] = useState('')
 
   // Campos formulário
   const [nome, setNome] = useState('')
@@ -32,6 +38,9 @@ export default function Generos () {
   // Modal
   const [showModal, setShowModal] = useState(false)
   const [modalType, setModalType] = useState<'post'|'put'>()
+
+  // Dialog
+  const [showDialog, setShowDialog] = useState(false)
 
   useEffect(() => getGeneros(), [])
 
@@ -59,6 +68,7 @@ export default function Generos () {
   }
 
   const postGenero = () => {
+    setLoading(true)
     const objPost = { nome }
     console.log('objPost: ', objPost)
     api.post('genero', objPost)
@@ -69,6 +79,7 @@ export default function Generos () {
         })
         getGeneros()
         setShowModal(false)
+        setNome('')
       })
       .catch(err => setAlertSettings({
         message: err?.response?.data?.mensagem || 'Falha ao cadastrar gênero!',
@@ -78,6 +89,7 @@ export default function Generos () {
   }
 
   const putGenero = () => {
+    setLoading(true)
     const objPut = { id: selectedGeneros[0], nome }
     console.log('objPut: ', objPut)
     api.put('genero', objPut)
@@ -96,27 +108,56 @@ export default function Generos () {
       .finally(() => setLoading(false))
   }
 
+  const deleteGeneros = async () => {
+    setLoading(true)
+    const objDelete = { generos: selectedGeneros }
+    console.log('objDelete: ', objDelete)
+    api.post('genero/delete', objDelete)
+      .then(res => {
+        setAlertSettings({
+          message: res.data.mensagem,
+          type: 'success'
+        })
+        getGeneros()
+        setShowDialog(false)
+        setSelectedGeneros([])
+      })
+      .catch(err => setAlertSettings({
+        message: err?.response?.data?.mensagem || 'Falha ao editar gênero!',
+        type: 'error'
+      }))
+      .finally(() => setLoading(false))
+  }
+
   return (
     <PageComponent title='Gêneros' rightElement={
       <Stack direction={['column', 'row']} gap={3} justifyContent='center' alignItems='center'>
         <Button variant='contained' onClick={() => { setModalType('post'); setShowModal(true) }} startIcon={<Add />}>Cadastrar Gênero</Button>
         <Button variant='outlined' onClick={() => { setModalType('put'); setShowModal(true); setNome(generos.find(g => g.id === selectedGeneros[0]).nome) }} startIcon={<Edit />} disabled={selectedGeneros.length !== 1}>Editar Gênero</Button>
+        <Button variant='contained' color='error' onClick={() => { setShowDialog(true) }} startIcon={<Delete />} disabled={!selectedGeneros.length}>Remover Gênero(s)</Button>
       </Stack>
     }>
+      <InputComponent
+      label='Filtro'
+      value={filteredValue}
+      onChange={e => setFilteredValue(e.target.value)}
+      endIcon={<Tooltip title="Limpar filtro" arrow><IconButton onClick={() => setFilteredValue('')}><Clear /></IconButton></Tooltip>}
+      sx={{
+        maxWidth: '450px'
+      }} />
+      <Typography my={1}>{generos?.length} gêneros encontrados{selectedGeneros.length ? `, ${selectedGeneros.length} gêneros selecionados` : ''}</Typography>
       {
         loadingGet
           ? <Stack alignItems='center'><CircularProgress size={70} sx={{ my: 5 }} /></Stack>
-          : !generos?.length
-              ? <Typography my={5}>Não foi possível encontrar gêneros</Typography>
-              : (
-                <TableContainer sx={{ boxShadow: 3, borderRadius: 3, my: 3 }}>
+          : !!generos?.length && (
+                <TableContainer sx={{ boxShadow: 3, borderRadius: 3 }}>
                   <Table>
                     <TableHead>
                       <TableRow>
                         <TableCell>
                           <Checkbox
                             checked={selectedGeneros.length === generos.length}
-                            indeterminate={selectedGeneros.length && selectedGeneros.length !== generos.length}
+                            indeterminate={!!selectedGeneros.length && selectedGeneros.length < generos.length}
                             onChange={() => {
                               if (selectedGeneros.length < generos.length) {
                                 setSelectedGeneros([...generos.map(g => g.id)])
@@ -136,8 +177,8 @@ export default function Generos () {
                     </TableHead>
                     <TableBody>
                       {
-                        generos?.map(genero => (
-                          <TableRow key={genero.id}>
+                        (filteredValue ? generos.filter(g => g.id === filteredValue || g.nome.toLowerCase().includes(filteredValue.toLowerCase())) : generos)?.map(genero => (
+                          <TableRow key={genero.id} hover>
                             <TableCell>
                               <Checkbox
                                 checked={selectedGeneros?.includes(genero.id)}
@@ -164,10 +205,10 @@ export default function Generos () {
                     </TableBody>
                   </Table>
                 </TableContainer>
-                )
+            )
       }
 
-      <Stack direction={['column', 'row']} gap={3} justifyContent='center' alignItems='center'>
+      <Stack direction={['column', 'row']} gap={3} justifyContent='center' alignItems='center' mt={3}>
         <Link href='/Admin'>
           <Button variant='outlined' startIcon={<ArrowBack />}>Voltar ao DashBoard</Button>
         </Link>
@@ -202,11 +243,36 @@ export default function Generos () {
           </Stack>
 
           <Stack direction={['column', 'row']} gap={3} justifyContent='center' alignItems='center'>
-            <Button variant='outlined' onClick={() => setShowModal(false)} startIcon={<ArrowBack />}>Voltar</Button>
+            <Button variant='outlined' onClick={() => setShowModal(false)} startIcon={<ArrowBack />}>Cancelar</Button>
             <Button variant='contained' onClick={modalType === 'put' ? putGenero : postGenero} startIcon={loading ? <CircularProgress size='20px' color='inherit' /> : modalType === 'put' ? <Edit /> : <Add />}>{`${modalType === 'put' ? 'Editar' : 'Cadastrar'} Gênero`}</Button>
           </Stack>
         </PageComponent>
       </Modal>
+      <DialogComponent
+        open={showDialog}
+        setOpen={setShowDialog}
+        title="Remover itens"
+        text="Tem certeza que deseja remover estes itens?"
+        onConfirm={deleteGeneros}
+        content={
+          <Stack
+            direction='column'
+            boxShadow={3}
+            borderRadius={3}
+            pl={3}
+            py={1}
+            mt={2}
+            overflow='auto'
+            maxHeight={250}
+          >
+            {
+              selectedGeneros.map(idGenero => (
+                <Typography key={idGenero}>{generos.find(g => g.id === idGenero)?.nome}</Typography>
+              ))
+            }
+          </Stack>
+        }
+      />
     <AlertComponent message={alertSettings.message} type={alertSettings.type} showAlert={showAlert} setShowAlert={setShowAlert} />
     </PageComponent>
   )

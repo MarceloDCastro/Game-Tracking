@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, TextField, Typography } from '@mui/material'
+import { Box, SxProps, TextField, Theme, Typography } from '@mui/material'
 
 interface IInputComponent {
     label: string;
@@ -12,9 +12,11 @@ interface IInputComponent {
     onFocus?: React.FocusEventHandler<HTMLTextAreaElement | HTMLInputElement>;
     onBlur?: React.FocusEventHandler<HTMLTextAreaElement | HTMLInputElement>;
     onClick?: React.MouseEventHandler<HTMLDivElement>;
+    sx?: SxProps<Theme>;
+    endIcon?: Reacr.ReactNode;
 }
 
-const InputComponent = ({ label, icon, value, onChange, error, type, required, onFocus, onBlur, onClick }: IInputComponent) => {
+const InputComponent = ({ label, icon, value, onChange, error, type, required, onFocus, onBlur, onClick, sx, endIcon }: IInputComponent) => {
   return (
     <TextField
       fullWidth
@@ -33,6 +35,10 @@ const InputComponent = ({ label, icon, value, onChange, error, type, required, o
       onFocus={onFocus}
       onBlur={onBlur}
       onClick={onClick}
+      sx={sx}
+      InputProps={{
+        endAdornment: endIcon
+      }}
     />
   )
 }

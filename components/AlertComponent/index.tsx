@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 import { Alert, Slide, SlideProps, Snackbar } from '@mui/material'
 
 interface IAlertComponentProps {
@@ -8,7 +8,7 @@ interface IAlertComponentProps {
     setShowAlert: (state: boolean) => void;
 }
 
-export default function AlertComponent ({ type, message, showAlert, setShowAlert }: IAlertComponentProps) {
+function AlertComponent ({ type, message, showAlert, setShowAlert }: IAlertComponentProps) {
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return
@@ -32,3 +32,5 @@ export default function AlertComponent ({ type, message, showAlert, setShowAlert
     </Snackbar>
   )
 }
+
+export default memo(AlertComponent)

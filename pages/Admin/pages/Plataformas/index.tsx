@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Add, ArrowBack, Clear, Edit, Delete, Cancel, CancelOutlined } from '@mui/icons-material'
+import { Add, ArrowBack, Clear, Edit, Delete, Cancel, CancelOutlined, ArrowRight } from '@mui/icons-material'
 import { Button, CircularProgress, Modal, Stack, Box, Typography, Table, TableHead, TableRow, TableCell, Paper, TableBody, TableContainer, Checkbox, IconButton, Tooltip } from '@mui/material'
 import InputComponent from '../../../../components/InputComponent'
 import PageComponent from '../../../../components/PageComponent'
@@ -10,16 +10,16 @@ import AlertComponent from '../../../../components/AlertComponent'
 import Link from 'next/link'
 import { useAppThemeContext } from '../../../../context/ThemeContext'
 import DialogComponent from '../../../../components/DialogComponent'
-import { IGenero } from '../../../../interfaces/Genero'
+import { IPlataforma } from '../../../../interfaces/Plataforma'
 
-export default function Generos () {
+export default function Plataformas () {
   const { mode } = useAppThemeContext()
 
   const [loading, setLoading] = useState(false)
   const [loadingGet, setLoadingGet] = useState(false)
 
-  const [generos, setGeneros] = useState<IGenero[]>([])
-  const [selectedGeneros, setSelectedGeneros] = useState<number[]>([])
+  const [plataformas, setPlataformas] = useState<IPlataforma[]>([])
+  const [selectedPlataformas, setSelectedPlataformas] = useState<number[]>([])
 
   const [filteredValue, setFilteredValue] = useState('')
 
@@ -43,7 +43,7 @@ export default function Generos () {
   // Dialog
   const [showDialog, setShowDialog] = useState(false)
 
-  useEffect(() => getGeneros(), [])
+  useEffect(() => getPlataformas(), [])
 
   useEffect(() => {
     if (modalType === 'post') {
@@ -51,91 +51,91 @@ export default function Generos () {
     }
   }, [modalType])
 
-  useEffect(() => console.log('Selecionados: ', selectedGeneros), [selectedGeneros])
+  useEffect(() => console.log('Selecionados: ', selectedPlataformas), [selectedPlataformas])
 
   useEffect(() => {
     if (alertSettings.message !== '') { setShowAlert(true) }
   }, [alertSettings])
 
-  const getGeneros = () => {
+  const getPlataformas = () => {
     setLoadingGet(true)
-    api.get('genero')
-      .then(res => setGeneros(res.data))
+    api.get('plataforma')
+      .then(res => setPlataformas(res.data))
       .catch(err => setAlertSettings({
-        message: err?.response?.data?.mensagem || 'Falha ao buscar gêneros!',
+        message: err?.response?.data?.mensagem || 'Falha ao buscar plataformas!',
         type: 'error'
       }))
       .finally(() => setLoadingGet(false))
   }
 
-  const postGenero = () => {
+  const postPlataforma = () => {
     setLoading(true)
     const objPost = { nome }
     console.log('objPost: ', objPost)
-    api.post('genero', objPost)
+    api.post('plataforma', objPost)
       .then(res => {
         setAlertSettings({
           message: res.data.mensagem,
           type: 'success'
         })
-        getGeneros()
+        getPlataformas()
         setShowModal(false)
         setNome('')
       })
       .catch(err => setAlertSettings({
-        message: err?.response?.data?.mensagem || 'Falha ao cadastrar gênero!',
+        message: err?.response?.data?.mensagem || 'Falha ao cadastrar plataforma!',
         type: 'error'
       }))
       .finally(() => setLoading(false))
   }
 
-  const putGenero = () => {
+  const putPlataforma = () => {
     setLoading(true)
-    const objPut = { id: selectedGeneros[0], nome }
+    const objPut = { id: selectedPlataformas[0], nome }
     console.log('objPut: ', objPut)
-    api.put('genero', objPut)
+    api.put('plataforma', objPut)
       .then(res => {
         setAlertSettings({
           message: res.data.mensagem,
           type: 'success'
         })
-        getGeneros()
+        getPlataformas()
         setShowModal(false)
       })
       .catch(err => setAlertSettings({
-        message: err?.response?.data?.mensagem || 'Falha ao editar gênero!',
+        message: err?.response?.data?.mensagem || 'Falha ao editar plataforma!',
         type: 'error'
       }))
       .finally(() => setLoading(false))
   }
 
-  const deleteGeneros = async () => {
+  const deletePlataformas = async () => {
     setLoading(true)
-    const objDelete = { generos: selectedGeneros }
+    const objDelete = { plataformas: selectedPlataformas }
     console.log('objDelete: ', objDelete)
-    api.post('genero/delete', objDelete)
+    api.post('plataforma/delete', objDelete)
       .then(res => {
         setAlertSettings({
           message: res.data.mensagem,
           type: 'success'
         })
-        getGeneros()
+        getPlataformas()
         setShowDialog(false)
-        setSelectedGeneros([])
+        setSelectedPlataformas([])
       })
       .catch(err => setAlertSettings({
-        message: err?.response?.data?.mensagem || 'Falha ao deletar gênero!',
+        message: err?.response?.data?.mensagem || 'Falha ao deletar plataforma!',
         type: 'error'
       }))
       .finally(() => setLoading(false))
   }
 
   return (
-    <PageComponent title='Gêneros' rightElement={
+    <PageComponent title='Plataformas' rightElement={
       <Stack direction={['column', 'row']} gap={3} justifyContent='center' alignItems='center'>
-        <Button variant='contained' onClick={() => { setModalType('post'); setShowModal(true) }} startIcon={<Add />}>Cadastrar Gênero</Button>
-        <Button variant='outlined' onClick={() => { setModalType('put'); setShowModal(true); setNome(generos.find(g => g.id === selectedGeneros[0])?.nome || '') }} startIcon={<Edit />} disabled={selectedGeneros.length !== 1}>Editar Gênero</Button>
-        <Button variant='contained' color='error' onClick={() => { setShowDialog(true) }} startIcon={<Delete />} disabled={!selectedGeneros.length}>Remover Gênero(s)</Button>
+        <Button variant='contained' onClick={() => { setModalType('post'); setShowModal(true) }} startIcon={<Add />}>Cadastrar Plataforma</Button>
+        <Button variant='outlined' onClick={() => { setModalType('put'); setShowModal(true); setNome(plataformas.find(g => g.id === selectedPlataformas[0])?.nome || '') }} startIcon={<Edit />} disabled={selectedPlataformas.length !== 1}>Editar Plataforma</Button>
+        <Button variant='contained' color='error' onClick={() => { setShowDialog(true) }} startIcon={<Delete />} disabled={!selectedPlataformas.length}>Remover Plataforma(s)</Button>
       </Stack>
     }>
       <InputComponent
@@ -146,24 +146,24 @@ export default function Generos () {
       sx={{
         maxWidth: '450px'
       }} />
-      <Typography my={1}>{generos?.length} gêneros encontrados{selectedGeneros.length ? `, ${selectedGeneros.length} gêneros selecionados` : ''}</Typography>
+      <Typography my={1}>{plataformas?.length} plataformas encontradas{selectedPlataformas.length ? `, ${selectedPlataformas.length} plataformas selecionados` : ''}</Typography>
       {
         loadingGet
           ? <Stack alignItems='center'><CircularProgress size={70} sx={{ my: 5 }} /></Stack>
-          : !!generos?.length && (
+          : !!plataformas?.length && (
                 <TableContainer sx={{ boxShadow: 3, borderRadius: 3 }}>
                   <Table>
                     <TableHead>
                       <TableRow>
                         <TableCell>
                           <Checkbox
-                            checked={selectedGeneros.length === generos.length}
-                            indeterminate={!!selectedGeneros.length && selectedGeneros.length < generos.length}
+                            checked={selectedPlataformas.length === plataformas.length}
+                            indeterminate={!!selectedPlataformas.length && selectedPlataformas.length < plataformas.length}
                             onChange={() => {
-                              if (selectedGeneros.length < generos.length) {
-                                setSelectedGeneros([...generos.map(g => g.id)])
+                              if (selectedPlataformas.length < plataformas.length) {
+                                setSelectedPlataformas([...plataformas.map(g => g.id)])
                               } else {
-                                setSelectedGeneros([])
+                                setSelectedPlataformas([])
                               }
                             }}
                           />
@@ -178,27 +178,27 @@ export default function Generos () {
                     </TableHead>
                     <TableBody>
                       {
-                        (filteredValue ? generos.filter(g => g.id === filteredValue || g.nome.toLowerCase().includes(filteredValue.toLowerCase())) : generos)?.map(genero => (
-                          <TableRow key={genero.id} hover>
+                        (filteredValue ? plataformas.filter(g => g.id === filteredValue || g.nome.toLowerCase().includes(filteredValue.toLowerCase())) : plataformas)?.map(plataforma => (
+                          <TableRow key={plataforma.id} hover>
                             <TableCell>
                               <Checkbox
-                                checked={selectedGeneros?.includes(genero.id)}
+                                checked={selectedPlataformas?.includes(plataforma.id)}
                                 onChange={e => {
                                   if (e.target.checked) {
-                                    setSelectedGeneros([...selectedGeneros, genero.id])
+                                    setSelectedPlataformas([...selectedPlataformas, plataforma.id])
                                   } else {
-                                    const tempArray = [...selectedGeneros]
-                                    tempArray.splice(tempArray.findIndex(g => g === genero.id), 1)
-                                    setSelectedGeneros([...tempArray])
+                                    const tempArray = [...selectedPlataformas]
+                                    tempArray.splice(tempArray.findIndex(g => g === plataforma.id), 1)
+                                    setSelectedPlataformas([...tempArray])
                                   }
                                 }}
                               />
                             </TableCell>
                             <TableCell>
-                              {genero.id}
+                              {plataforma.id}
                             </TableCell>
                             <TableCell>
-                              {genero.nome}
+                              {plataforma.nome}
                             </TableCell>
                           </TableRow>
                         ))
@@ -221,7 +221,7 @@ export default function Generos () {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <PageComponent title={`${modalType === 'put' ? 'Editar' : 'Cadastrar'} Gênero`}
+        <PageComponent title={`${modalType === 'put' ? 'Editar' : 'Cadastrar'} Plataforma`}
         sx={{
           position: 'absolute' as 'absolute',
           top: '50%',
@@ -245,7 +245,7 @@ export default function Generos () {
 
           <Stack direction={['column', 'row']} gap={3} justifyContent='center' alignItems='center'>
             <Button variant='outlined' onClick={() => setShowModal(false)} startIcon={<CancelOutlined />}>Cancelar</Button>
-            <Button variant='contained' onClick={modalType === 'put' ? putGenero : postGenero} startIcon={loading ? <CircularProgress size='20px' color='inherit' /> : modalType === 'put' ? <Edit /> : <Add />}>{`${modalType === 'put' ? 'Editar' : 'Cadastrar'} Gênero`}</Button>
+            <Button variant='contained' onClick={modalType === 'put' ? putPlataforma : postPlataforma} startIcon={loading ? <CircularProgress size='20px' color='inherit' /> : modalType === 'put' ? <Edit /> : <Add />}>{`${modalType === 'put' ? 'Editar' : 'Cadastrar'} Plataforma`}</Button>
           </Stack>
         </PageComponent>
       </Modal>
@@ -254,21 +254,21 @@ export default function Generos () {
         setOpen={setShowDialog}
         title="Remover itens"
         text="Tem certeza que deseja remover estes itens?"
-        onConfirm={deleteGeneros}
+        onConfirm={deletePlataformas}
         content={
           <Stack
             direction='column'
             boxShadow={3}
             borderRadius={3}
-            pl={3}
+            pl={2}
             py={1}
             mt={2}
             overflow='auto'
             maxHeight={250}
           >
             {
-              selectedGeneros.map(idGenero => (
-                <Typography key={idGenero}>{generos.find(g => g.id === idGenero)?.nome}</Typography>
+              selectedPlataformas.map(idPlataforma => (
+                <Typography key={idPlataforma} display='flex' alignItems='center'><ArrowRight /> {plataformas.find(g => g.id === idPlataforma)?.nome}</Typography>
               ))
             }
           </Stack>

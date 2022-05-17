@@ -2,11 +2,19 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import DashBoard from './pages/DashBoard'
 import Publicacoes from './pages/Publicacoes'
-import { Group, Newspaper, TipsAndUpdates, Menu, ArrowRight, ArrowLeft, Edit } from '@mui/icons-material'
+import { Group, Newspaper, TipsAndUpdates, ArrowRight, ArrowLeft, Edit, Devices } from '@mui/icons-material'
 import { Backdrop, SpeedDial, SpeedDialAction, SwipeableDrawer, Box, Slide, List, ListItem, ListItemIcon, ListItemText, IconButton, Button, Stack } from '@mui/material'
 import { Pallete, useAppThemeContext } from '../../context/ThemeContext'
 import Link from 'next/link'
 import Generos from './pages/Generos'
+import Plataformas from './pages/Plataformas'
+
+interface IPageProps {
+  label: string;
+  pageName: string;
+  page: React.ReactNode;
+  icon: React.ReactNode;
+}
 
 export default function Admin () {
   const { mode } = useAppThemeContext()
@@ -14,33 +22,43 @@ export default function Admin () {
 
   const [open, setOpen] = React.useState(false)
 
-  const itemsArray = [
-    {
-      label: 'Dashboard',
-      page: '',
-      icon: <Group color='primary' />
-    },
+  const itemsArray: IPageProps[] = [
     {
       label: 'Usuários',
-      page: 'Usuarios',
+      pageName: 'Usuarios',
+      page: <Publicacoes />,
       icon: <Group color='primary' />
     },
     {
       label: 'Sugestões',
-      page: 'Sugestoes',
+      pageName: 'Sugestoes',
+      page: <Publicacoes />,
       icon: <TipsAndUpdates color='primary' />
-    }, {
+    },
+    {
       label: 'Publicações',
-      page: 'Publicacoes',
+      pageName: 'Publicacoes',
+      page: <Publicacoes />,
       icon: <Newspaper color='primary' />
-    }, {
+    },
+    {
       label: 'Gêneros',
-      page: 'Generos',
+      pageName: 'Generos',
+      page: <Generos />,
       icon: <Edit color='primary' />
+    },
+    {
+      label: 'Plataformas',
+      pageName: 'Plataformas',
+      page: <Plataformas />,
+      icon: <Devices color='primary' />
     }
   ]
 
-  useEffect(() => console.log('route: ', router), [router])
+  useEffect(() => {
+    console.log('route: ', router)
+    console.log('Página: ', itemsArray?.find(i => i.pageName === router.query.page))
+  }, [router])
 
   return (
     <>
@@ -75,10 +93,10 @@ export default function Admin () {
           <Stack>
             {itemsArray.map((item) => (
               <Link
-                key={item.page}
+                key={item.pageName}
                 href={{
                   pathname: '/Admin',
-                  query: item.page && { page: item.page }
+                  query: item.pageName && { page: item.pageName }
                 }}
               >
                 <Button startIcon={item.icon} sx={{ justifyContent: 'start', px: 3, py: 2, fontSize: 'large' }} onClick={() => setOpen(false)}>
@@ -90,13 +108,9 @@ export default function Admin () {
         </Box>
       </SwipeableDrawer>
         {
-          !router.query.page
-            ? <DashBoard itemsArray={itemsArray} />
-            : router.query.page === 'Publicacoes'
-              ? <Publicacoes />
-              : router.query.page === 'Generos'
-                ? <Generos />
-                : <DashBoard itemsArray={itemsArray} />
+          router.query.page
+            ? itemsArray.find(i => i.pageName === router.query.page)?.page || <DashBoard itemsArray={itemsArray} />
+            : <DashBoard itemsArray={itemsArray} />
         }
     </>
   )

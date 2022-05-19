@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, TextField, Typography } from '@mui/material'
+import { Box, SxProps, TextField, Theme, Typography } from '@mui/material'
 
 interface ITextAreaComponent {
     label: string;
@@ -7,9 +7,11 @@ interface ITextAreaComponent {
     value?: string;
     onChange?: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
     required?: boolean;
+    disabled?: boolean;
+    sx?: SxProps<Theme>
 }
 
-const TextAreaComponent = ({ label, icon, value, onChange, required }: ITextAreaComponent) => {
+const TextAreaComponent = ({ label, icon, value, onChange, required, disabled, sx }: ITextAreaComponent) => {
   return (
       <TextField
               fullWidth
@@ -23,6 +25,8 @@ const TextAreaComponent = ({ label, icon, value, onChange, required }: ITextArea
                 </Box>
               }
               variant='outlined'
+              disabled={disabled}
+              sx={sx}
               />
   )
 }

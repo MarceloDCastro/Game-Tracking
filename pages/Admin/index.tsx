@@ -8,6 +8,7 @@ import { Pallete, useAppThemeContext } from '../../context/ThemeContext'
 import Link from 'next/link'
 import Generos from './pages/Generos'
 import Plataformas from './pages/Plataformas'
+import Sugestoes from './pages/Sugestoes'
 
 interface IPageProps {
   label: string;
@@ -32,7 +33,7 @@ export default function Admin () {
     {
       label: 'Sugestões',
       pageName: 'Sugestoes',
-      page: <Publicacoes />,
+      page: <Sugestoes />,
       icon: <TipsAndUpdates color='primary' />
     },
     {

@@ -8,6 +8,7 @@ import InputComponent from '../../components/InputComponent'
 import PageComponent from '../../components/PageComponent'
 import TextAreaComponent from '../../components/TextAreaComponent'
 import { AuthContext } from '../../context/AuthContext'
+import { ISugestaoPost } from '../../interfaces/Sugestao'
 import { api } from '../../services/api'
 
 function Sugestao () {
@@ -33,7 +34,8 @@ function Sugestao () {
 
   const postSugestao = async () => {
     setLoading(true)
-    api.post('sugestao', { assunto, mensagem })
+    const objPost: ISugestaoPost = { assunto, mensagem }
+    api.post('sugestao', objPost)
       .then(res => setAlertSettings({
         message: res.data.mensagem,
         type: 'success'

@@ -10,7 +10,7 @@ import AlertComponent from '../../../../components/AlertComponent'
 import Link from 'next/link'
 import { useAppThemeContext } from '../../../../context/ThemeContext'
 import DialogComponent from '../../../../components/DialogComponent'
-import { IPlataforma } from '../../../../interfaces/Plataforma'
+import { IPlataforma, IPlataformaPost } from '../../../../interfaces/Plataforma'
 
 export default function Plataformas () {
   const { mode } = useAppThemeContext()
@@ -70,7 +70,7 @@ export default function Plataformas () {
 
   const postPlataforma = () => {
     setLoading(true)
-    const objPost = { nome }
+    const objPost: IPlataformaPost = { nome }
     console.log('objPost: ', objPost)
     api.post('plataforma', objPost)
       .then(res => {
@@ -178,7 +178,7 @@ export default function Plataformas () {
                     </TableHead>
                     <TableBody>
                       {
-                        (filteredValue ? plataformas.filter(g => g.id === filteredValue || g.nome.toLowerCase().includes(filteredValue.toLowerCase())) : plataformas)?.map(plataforma => (
+                        (filteredValue ? plataformas.filter(g => g.id.toString() === filteredValue || g.nome.toLowerCase().includes(filteredValue.toLowerCase())) : plataformas)?.map(plataforma => (
                           <TableRow key={plataforma.id} hover>
                             <TableCell>
                               <Checkbox

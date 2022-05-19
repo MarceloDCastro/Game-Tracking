@@ -1,4 +1,8 @@
 export interface IGenero{
-    id?: number;
+    id: number;
+    nome: string;
+}
+
+export interface IGeneroPost{
     nome: string;
 }

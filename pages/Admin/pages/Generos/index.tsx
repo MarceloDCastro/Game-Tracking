@@ -10,7 +10,7 @@ import AlertComponent from '../../../../components/AlertComponent'
 import Link from 'next/link'
 import { useAppThemeContext } from '../../../../context/ThemeContext'
 import DialogComponent from '../../../../components/DialogComponent'
-import { IGenero } from '../../../../interfaces/Genero'
+import { IGenero, IGeneroPost } from '../../../../interfaces/Genero'
 
 export default function Generos () {
   const { mode } = useAppThemeContext()
@@ -70,7 +70,7 @@ export default function Generos () {
 
   const postGenero = () => {
     setLoading(true)
-    const objPost = { nome }
+    const objPost: IGeneroPost = { nome }
     console.log('objPost: ', objPost)
     api.post('genero', objPost)
       .then(res => {
@@ -178,7 +178,7 @@ export default function Generos () {
                     </TableHead>
                     <TableBody>
                       {
-                        (filteredValue ? generos.filter(g => g.id === filteredValue || g.nome.toLowerCase().includes(filteredValue.toLowerCase())) : generos)?.map(genero => (
+                        (filteredValue ? generos.filter(g => g.id.toString() === filteredValue || g.nome.toLowerCase().includes(filteredValue.toLowerCase())) : generos)?.map(genero => (
                           <TableRow key={genero.id} hover>
                             <TableCell>
                               <Checkbox

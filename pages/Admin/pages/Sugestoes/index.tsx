@@ -167,7 +167,7 @@ export default function Sugestoes () {
                     </TableHead>
                     <TableBody>
                       {
-                        (filteredValue ? sugestoes.filter(s => s.id.toString() === filteredValue || s.assunto.toLowerCase().includes(filteredValue.toLowerCase())) : sugestoes)?.map(sugestao => (
+                        (filteredValue ? sugestoes.filter(s => s.id.toString() === filteredValue || s.assunto.toLowerCase().includes(filteredValue.toLowerCase()) || s.Usuario.nome.toLowerCase().includes(filteredValue.toLowerCase())) : sugestoes)?.map(sugestao => (
                           <TableRow key={sugestao.id} hover>
                             <TableCell>
                               <Checkbox
@@ -248,7 +248,7 @@ export default function Sugestoes () {
 
           <Stack direction={['column', 'row']} gap={3} justifyContent='center' alignItems='center'>
             <Button variant='outlined' onClick={() => setShowModal(false)} startIcon={<ArrowBack />}>Voltar</Button>
-            <Button variant='contained' onClick={marcarSugestaoComoVisualizada} startIcon={<Check />}>Marcar como Visualizada</Button>
+            {sugestaoVisualizada?.status !== 'Visualizado' && <Button variant='contained' onClick={marcarSugestaoComoVisualizada} startIcon={<Check />}>Marcar como Visualizada</Button>}
           </Stack>
         </PageComponent>
       </Modal>

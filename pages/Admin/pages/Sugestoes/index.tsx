@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Add, ArrowBack, Clear, Edit, Delete, Cancel, Check, ArrowRight, Visibility, Message } from '@mui/icons-material'
-import { Button, CircularProgress, TextField, Modal, Stack, Box, Typography, Table, TableHead, TableRow, TableCell, Paper, TableBody, TableContainer, Checkbox, IconButton, Tooltip, Chip } from '@mui/material'
+import { Add, ArrowBack, Clear, Edit, Delete, Cancel, Check, ArrowRight, Visibility, Message, Search } from '@mui/icons-material'
+import { Button, CircularProgress, TextField, Modal, Stack, Box, Typography, Table, TableHead, TableRow, TableCell, Paper, TableBody, TableContainer, Checkbox, IconButton, Tooltip, Chip, TableFooter, Pagination, TablePagination } from '@mui/material'
 import InputComponent from '../../../../components/InputComponent'
 import PageComponent from '../../../../components/PageComponent'
 
@@ -24,10 +24,22 @@ export default function Sugestoes () {
   const [sugestaoVisualizada, setSugestaoVisualizada] = useState<ISugestao>()
   const [selectedSugestoes, setSelectedSugestoes] = useState<number[]>([])
 
-  const [filteredValue, setFilteredValue] = useState('')
+  // Filtro
+  const [search, setSearch] = useState<{
+    filterValue: string,
+    searchValue: string
+  }>({
+    filterValue: '',
+    searchValue: ''
+  })
 
   // Campos formulário
   const [nome, setNome] = useState('')
+
+  // Paginação
+  const [page, setPage] = useState(0)
+  const [itemsPerPage, setItemsPerPage] = useState(12)
+  const [totalItems, setTotalItems] = useState(0)
 
   // Alerta
   const [showAlert, setShowAlert] = useState(false)
@@ -46,7 +58,7 @@ export default function Sugestoes () {
   // Dialog
   const [showDialog, setShowDialog] = useState(false)
 
-  useEffect(() => getSugestoes(), [])
+  useEffect(() => getSugestoes(), [page, itemsPerPage, search.searchValue])
 
   useEffect(() => {
     if (modalType === 'post') {
@@ -62,8 +74,13 @@ export default function Sugestoes () {
 
   const getSugestoes = () => {
     setLoadingGet(true)
-    api.get('sugestao')
-      .then(res => setSugestoes(res.data))
+    api.get(`sugestao?page=${page}&itemsPerPage=${itemsPerPage}&search=${search.searchValue}`)
+      .then(res => {
+        console.log('GET: ', res.data)
+        setSugestoes(res.data.sugestoes)
+        setTotalItems(res.data.totalItems)
+        setSelectedSugestoes([])
+      })
       .catch(err => setAlertSettings({
         message: err?.response?.data?.mensagem || 'Falha ao buscar sugestoes!',
         type: 'error'
@@ -113,24 +130,57 @@ export default function Sugestoes () {
   }
 
   return (
-    <PageComponent title='Sugestoes' rightElement={
+    <PageComponent title='Sugestões' rightElement={
       <Stack direction={['column', 'row']} gap={3} justifyContent='center' alignItems='center'>
-        <Button variant='contained' color='error' onClick={() => { setShowDialog(true) }} startIcon={<Delete />} disabled={!selectedSugestoes.length}>Remover Sugestao(s)</Button>
+        <Button variant='contained' color='error' onClick={() => { setShowDialog(true) }} startIcon={<Delete />} disabled={!selectedSugestoes.length}>Remover Sugestões</Button>
       </Stack>
     }>
       <InputComponent
       label='Filtro'
-      value={filteredValue}
-      onChange={e => setFilteredValue(e.target.value)}
-      endIcon={<Tooltip title="Limpar filtro" arrow><IconButton onClick={() => setFilteredValue('')}><Clear /></IconButton></Tooltip>}
+      value={search.filterValue}
+      onChange={e => setSearch({ ...search, filterValue: e.target.value })}
+      onKeyPress={({ code }) => {
+        if (code === 'Enter') {
+          setSearch({ ...search, searchValue: search.filterValue })
+          setPage(0)
+        }
+      }}
+      endIcon={
+        <>
+          <Tooltip title="Buscar" arrow>
+            <IconButton onClick={() => {
+              setSearch({ ...search, searchValue: search.filterValue })
+              setPage(0)
+            }}>
+              <Search />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Limpar filtro" arrow>
+            <IconButton onClick={() => {
+              setSearch({ filterValue: '', searchValue: '' })
+              setPage(0)
+            }}>
+              <Clear />
+            </IconButton>
+          </Tooltip>
+        </>
+      }
       sx={{
         maxWidth: '450px'
       }} />
-      <Typography my={1}>{sugestoes?.length} sugestoes encontradas{selectedSugestoes.length ? `, ${selectedSugestoes.length} sugestoes selecionados` : ''}</Typography>
+      <Typography my={1}>
+        {
+          !sugestoes.length
+            ? 'Nenhuma sugestão encontrada'
+            : `${totalItems} sugestões encontradas`
+        }
+          {selectedSugestoes.length ? `, ${selectedSugestoes.length} sugestões selecionadas` : ''}
+      </Typography>
       {
         loadingGet
           ? <Stack alignItems='center'><CircularProgress size={70} sx={{ my: 5 }} /></Stack>
           : !!sugestoes?.length && (
+            <>
                 <TableContainer sx={{ boxShadow: 3, borderRadius: 3 }}>
                   <Table>
                     <TableHead>
@@ -167,7 +217,7 @@ export default function Sugestoes () {
                     </TableHead>
                     <TableBody>
                       {
-                        (filteredValue ? sugestoes.filter(s => s.id.toString() === filteredValue || s.assunto.toLowerCase().includes(filteredValue.toLowerCase()) || s.Usuario.nome.toLowerCase().includes(filteredValue.toLowerCase())) : sugestoes)?.map(sugestao => (
+                        sugestoes?.map(sugestao => (
                           <TableRow key={sugestao.id} hover>
                             <TableCell>
                               <Checkbox
@@ -203,7 +253,18 @@ export default function Sugestoes () {
                       }
                     </TableBody>
                   </Table>
+                  <Stack justifyContent='center' alignItems='center' p={1}>
+                  <TablePagination
+                    count={totalItems}
+                    page={page}
+                    onPageChange={(e, value) => setPage(value)}
+                    rowsPerPageOptions={[12, 24, 36]}
+                    rowsPerPage={itemsPerPage}
+                    onRowsPerPageChange={(e) => setItemsPerPage(parseInt(e.target.value))}
+                  />
+                  </Stack>
                 </TableContainer>
+              </>
             )
       }
 

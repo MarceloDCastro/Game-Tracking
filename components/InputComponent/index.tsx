@@ -13,10 +13,11 @@ interface IInputComponent {
     onBlur?: React.FocusEventHandler<HTMLTextAreaElement | HTMLInputElement>;
     onClick?: React.MouseEventHandler<HTMLDivElement>;
     sx?: SxProps<Theme>;
-    endIcon?: Reacr.ReactNode;
+    endIcon?: React.ReactNode;
+    onKeyPress?: React.KeyboardEventHandler<HTMLDivElement>;
 }
 
-const InputComponent = ({ label, icon, value, onChange, error, type, required, onFocus, onBlur, onClick, sx, endIcon }: IInputComponent) => {
+const InputComponent = ({ label, icon, value, onChange, error, type, required, onFocus, onBlur, onClick, sx, endIcon, onKeyPress }: IInputComponent) => {
   return (
     <TextField
       fullWidth
@@ -39,6 +40,7 @@ const InputComponent = ({ label, icon, value, onChange, error, type, required, o
       InputProps={{
         endAdornment: endIcon
       }}
+      onKeyPress={onKeyPress}
     />
   )
 }

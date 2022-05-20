@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import DashBoard from './pages/DashBoard'
 import Publicacoes from './pages/Publicacoes'
-import { Group, Newspaper, TipsAndUpdates, ArrowRight, ArrowLeft, Edit, Devices } from '@mui/icons-material'
+import { Group, Newspaper, TipsAndUpdates, ArrowRight, ArrowLeft, Edit, Devices, SportsEsports } from '@mui/icons-material'
 import { Backdrop, SpeedDial, SpeedDialAction, SwipeableDrawer, Box, Slide, List, ListItem, ListItemIcon, ListItemText, IconButton, Button, Stack } from '@mui/material'
 import { Pallete, useAppThemeContext } from '../../context/ThemeContext'
 import Link from 'next/link'
@@ -41,6 +41,12 @@ export default function Admin () {
       pageName: 'Publicacoes',
       page: <Publicacoes />,
       icon: <Newspaper color='primary' />
+    },
+    {
+      label: 'Jogos',
+      pageName: 'Jogos',
+      page: <Publicacoes />,
+      icon: <SportsEsports color='primary' />
     },
     {
       label: 'Gêneros',

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Add, ArrowBack, Clear, Edit, Delete, Cancel, CancelOutlined } from '@mui/icons-material'
+import { Add, ArrowBack, Clear, Edit, Delete, Cancel, CancelOutlined, ArrowRight } from '@mui/icons-material'
 import { Button, CircularProgress, Modal, Stack, Box, Typography, Table, TableHead, TableRow, TableCell, Paper, TableBody, TableContainer, Checkbox, IconButton, Tooltip } from '@mui/material'
 import InputComponent from '../../../../components/InputComponent'
 import PageComponent from '../../../../components/PageComponent'
@@ -268,7 +268,7 @@ export default function Generos () {
           >
             {
               selectedGeneros.map(idGenero => (
-                <Typography key={idGenero}>{generos.find(g => g.id === idGenero)?.nome}</Typography>
+                <Typography key={idGenero} display='flex' alignItems='center'><ArrowRight /> {generos.find(g => g.id === idGenero)?.nome}</Typography>
               ))
             }
           </Stack>

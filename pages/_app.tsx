@@ -8,13 +8,6 @@ import { AuthProvider } from '../context/AuthContext'
 
 function MyApp ({ Component, pageProps }: AppProps) {
   return (
-    <html>
-      <head>
-        <title>GameTracking</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com/%22%3E" />
-        <link rel="preconnect" href="https://fonts.gstatic.com/" crossOrigin />
-        <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet" />
-      </head>
       <AppThemeProvider>
         <AuthProvider>
           <Stack justifyContent="space-between" width="100vw" minHeight="100vh">
@@ -24,7 +17,6 @@ function MyApp ({ Component, pageProps }: AppProps) {
           </Stack>
         </AuthProvider>
       </AppThemeProvider>
-    </html>
   )
 }
 

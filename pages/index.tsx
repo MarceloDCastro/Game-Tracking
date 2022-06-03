@@ -77,7 +77,7 @@ function Home () {
                       descricao={publicacao.descricao}
                       data={publicacao.dataLancamento}
                       tipo={publicacao.tipo}
-                      imagem="https://s2.glbimg.com/UgXIIunG5bMk3LYbQIRM0soczpQ=/0x0:1200x675/600x0/smart/filters:gifv():strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2020/j/U/iLO5YCRBmGHUsDwBIBHA/valorant-closed-beta-1200x675.png"
+                      imagem={publicacao?.imagem}
                       link={`Publicacao/${publicacao.nome}`}
                     />
                   </Grid>

@@ -37,18 +37,6 @@ const CardComponent = ({ titulo, descricao, data, tipo, imagem, link }: ICardCom
         <Typography variant="body1">
           {descricao.length > 100 ? descricao.substring(0, 100) + '...' : descricao}
         </Typography>
-        <Stack direction="row" justifyContent="end">
-            <Tooltip title="Curtir" placement="left" TransitionComponent={Zoom} arrow>
-            <Badge badgeContent='5.3k' color="secondary" anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'left'
-            }}>
-            <IconButton onClick={() => setLiked(!liked)}>
-                {liked ? <Favorite color='error' /> : <FavoriteBorderOutlined />}
-            </IconButton>
-            </Badge>
-            </Tooltip>
-        </Stack>
         <Button variant='contained' href={link} fullWidth sx={{ mt: 1 }}>Ver Mais</Button>
       </CardContent>
     </Card>

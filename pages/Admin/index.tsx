@@ -9,6 +9,7 @@ import Link from 'next/link'
 import Generos from './pages/Generos'
 import Plataformas from './pages/Plataformas'
 import Sugestoes from './pages/Sugestoes'
+import Jogos from './pages/Jogos'
 
 interface IPageProps {
   label: string;
@@ -45,7 +46,7 @@ export default function Admin () {
     {
       label: 'Jogos',
       pageName: 'Jogos',
-      page: <Publicacoes />,
+      page: <Jogos />,
       icon: <SportsEsports color='primary' />
     },
     {

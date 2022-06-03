@@ -26,7 +26,7 @@ export default function Publicacoes () {
   const [dataLancamento, setDataLancamento] = useState<Date>()
   const [tipo, setTipo] = useState('')
   const [link, setLink] = useState('')
-  const [imagem, setImagem] = useState('')
+  const [imagem, setImagem] = useState<string>()
 
   useEffect(() => console.log('img: ', imagem), [imagem])
 
@@ -50,9 +50,7 @@ export default function Publicacoes () {
 
   useEffect(() => getPublicacoes(), [])
 
-  useEffect(() => {
-    if (alertSettings.message !== '') { setShowAlert(true) }
-  }, [alertSettings])
+  useEffect(() => console.log('imagem: ', imagem), [imagem])
 
   const tiposPublicacao = [
     {
@@ -86,14 +84,17 @@ export default function Publicacoes () {
       descricao,
       dataLancamento,
       tipo,
-      link
+      link,
+      imagem: imagem
     }
     console.log('objPost: ', objPost)
     api.post('publicacao', objPost)
-      .then(res => setAlertSettings({
-        message: res.data.mensagem,
-        type: 'success'
-      }))
+      .then(res => console.log('Deu certo: ', res)
+      // setAlertSettings({
+      //   message: res.data.mensagem,
+      //   type: 'success'
+      // })
+      )
       .catch(err => setAlertSettings({
         message: err?.response?.data?.mensagem || 'Falha ao cadastrar publicação!',
         type: 'error'
@@ -111,10 +112,10 @@ export default function Publicacoes () {
         loadingGet
           ? <Stack alignItems='center'><CircularProgress size={70} sx={{ my: 5 }} /></Stack>
           : !publicacoes.length
-              ? <Typography my={5}>Não foi possível encontrar publicações</Typography>
+              ? <Typography>Não foi possível encontrar publicações</Typography>
               : <Table>
 
-            </Table>
+              </Table>
       }
 
       <Stack direction={['column', 'row']} gap={3} justifyContent='center' alignItems='center'>
@@ -149,7 +150,7 @@ export default function Publicacoes () {
         }}>
 
           <Stack justifyContent='center' alignItems='center' mb={3} pt={3}>
-            <DropzoneComponent image={imagem} setImage={setImagem} />
+              <DropzoneComponent label="Imagem da Publicação:" image={imagem} setImage={setImagem} required />
           </Stack>
           <Stack direction={['column', 'row']} gap={[3, '5%']} mb={3}>
             <InputComponent label='Título' value={titulo} onChange={e => setTitulo(e.target.value)} icon={<Title />} required />

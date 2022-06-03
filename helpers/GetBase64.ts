@@ -1,4 +1,4 @@
-export const getBase64 = async (file: any) =>
+export const getBase64 = async (file: File): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader()
 
@@ -7,9 +7,6 @@ export const getBase64 = async (file: any) =>
     }
 
     reader.onload = () =>
-      resolve({
-        fileName: file.name,
-        base64: reader.result
-      })
+      resolve(reader.result as string)
     reader.onerror = reject
   })

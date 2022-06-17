@@ -16,6 +16,8 @@ import moment from 'moment'
 import { DayPicker } from 'react-day-picker'
 import { IGenero } from '../../../../interfaces/Genero'
 import DropzoneListComponent from '../../../../components/DropzoneListComponent'
+import { Carousel } from 'react-responsive-carousel'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -72,7 +74,7 @@ export default function Jogos () {
 
   // Modal
   const [showModal, setShowModal] = useState(false)
-  const [modalType, setModalType] = useState<'post'|'put'>()
+  const [modalType, setModalType] = useState<'post'|'put'|'view'>()
 
   // Dialog
   const [showDialog, setShowDialog] = useState(false)
@@ -84,6 +86,7 @@ export default function Jogos () {
   useEffect(() => {
     if (modalType === 'post') {
       setObjJogo(undefined)
+      setImages([])
     }
   }, [modalType])
 
@@ -305,7 +308,7 @@ export default function Jogos () {
                               {jogo.dataLancamento && moment(jogo.dataLancamento).format('L')}
                             </TableCell>
                             <TableCell align='center'>
-                              <IconButton onClick={() => { setJogoVisualizada(jogo); setShowModal(true) }}><Visibility color='primary' /></IconButton>
+                              <IconButton onClick={() => { setObjJogo(jogo); setImages([...jogo.ImagensJogos]); setModalType('view'); setShowModal(true) }}><Visibility color='primary' /></IconButton>
                             </TableCell>
                           </TableRow>
                         ))
@@ -339,7 +342,7 @@ export default function Jogos () {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <PageComponent title='Visualizar Jogo'
+        <PageComponent title={modalType === 'post' ? 'Cadastrar Jogo' : modalType === 'put' ? 'Editar Jogo' : 'Visualizar Jogo'}
         sx={{
           position: 'absolute' as 'absolute',
           top: '50%',
@@ -358,8 +361,8 @@ export default function Jogos () {
           overflowX: 'auto'
         }}>
           <Stack direction={['column', 'row']} gap={[3, '5%']} my={3}>
-            <InputComponent label='Nome' value={objJogo?.nome} onChange={e => setObjJogo({ ...objJogo, nome: e.target.value })} icon={<Edit />} required />
-            <InputComponent label='Data de Lançamento' value={objJogo?.dataLancamento ? moment(objJogo.dataLancamento).format('DD/MM/YYYY') : ''} onClick={(e) => setAnchorEl(e.currentTarget)} icon={<CalendarToday />} required />
+            <InputComponent label='Nome' value={objJogo?.nome} onChange={e => setObjJogo({ ...objJogo, nome: e.target.value })} icon={<Edit />} required disabled={modalType === 'view'} />
+            <InputComponent label='Data de Lançamento' value={objJogo?.dataLancamento ? moment(objJogo.dataLancamento).format('DD/MM/YYYY') : ''} onClick={(e) => { if (modalType !== 'view') setAnchorEl(e.currentTarget) }} icon={<CalendarToday />} required disabled={modalType === 'view'} />
             <Popover
               id='dataLancamento'
               open={openDateModal}
@@ -420,6 +423,7 @@ export default function Jogos () {
                     </Box>
                   )}
                   MenuProps={MenuProps}
+                  disabled={modalType === 'view'}
                 >
                   {generos?.map((genero) => (
                     <MenuItem
@@ -434,16 +438,32 @@ export default function Jogos () {
           </Stack>
 
           <Stack direction={['column', 'row']} gap={[3, '5%']} my={3}>
-            <TextAreaComponent label='Descrição' icon={<Message />} value={objJogo?.descricao} onChange={e => setObjJogo({ ...objJogo, descricao: e.target.value })} />
+            <TextAreaComponent label='Descrição' icon={<Message />} value={objJogo?.descricao} onChange={e => setObjJogo({ ...objJogo, descricao: e.target.value })} disabled={modalType === 'view'} />
           </Stack>
 
           <Stack direction={['column', 'row']} gap={[3, '5%']} my={3}>
-            <DropzoneListComponent images={images} setImages={setImages} required />
+            {modalType !== 'view'
+              ? <DropzoneListComponent images={images} setImages={setImages} required />
+              : (
+                <Stack justifyContent='center' alignItems='center'>
+                  <Box width='60%' minWidth='300px'>
+                    <Typography fontWeight='bold' display='flex'>Imagens ({images.length}/4)</Typography>
+                    <Carousel autoPlay infiniteLoop emulateTouch>
+                      {
+                        images?.map(i => (
+                            <img key={i.id} style={{ userSelect: 'none' }} src={i.url} />
+                        ))
+                      }
+                    </Carousel>
+                  </Box>
+                </Stack>
+                )
+            }
           </Stack>
 
           <Stack direction={['column', 'row']} gap={3} justifyContent='center' alignItems='center'>
-            <Button variant='outlined' onClick={() => setShowModal(false)} startIcon={<CancelOutlined />}>Cancelar</Button>
-            <Button variant='contained' onClick={modalType === 'put' ? putJogo : postJogo} startIcon={loading ? <CircularProgress size='20px' color='inherit' /> : modalType === 'put' ? <Edit /> : <Add />}>{`${modalType === 'put' ? 'Editar' : 'Cadastrar'} Jogo`}</Button>
+            <Button variant='outlined' onClick={() => setShowModal(false)} startIcon={<CancelOutlined />}>{modalType !== 'view' ? 'Cancelar' : 'Voltar'}</Button>
+            {modalType !== 'view' && <Button variant='contained' onClick={modalType === 'put' ? putJogo : postJogo} startIcon={loading ? <CircularProgress size='20px' color='inherit' /> : modalType === 'put' ? <Edit /> : <Add />}>{`${modalType === 'put' ? 'Editar' : 'Cadastrar'} Jogo`}</Button>}
           </Stack>
         </PageComponent>
       </Modal>

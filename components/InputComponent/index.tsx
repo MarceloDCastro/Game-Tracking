@@ -15,9 +15,10 @@ interface IInputComponent {
     sx?: SxProps<Theme>;
     endIcon?: React.ReactNode;
     onKeyPress?: React.KeyboardEventHandler<HTMLDivElement>;
+    disabled?: boolean;
 }
 
-const InputComponent = ({ label, icon, value, onChange, error, type, required, onFocus, onBlur, onClick, sx, endIcon, onKeyPress }: IInputComponent) => {
+const InputComponent = ({ label, icon, value, onChange, error, type, required, onFocus, onBlur, onClick, sx, endIcon, onKeyPress, disabled }: IInputComponent) => {
   return (
     <TextField
       fullWidth
@@ -41,6 +42,7 @@ const InputComponent = ({ label, icon, value, onChange, error, type, required, o
         endAdornment: endIcon
       }}
       onKeyPress={onKeyPress}
+      disabled={disabled}
     />
   )
 }

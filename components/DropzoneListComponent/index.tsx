@@ -15,11 +15,10 @@ interface IDropzoneListComponentProps {
 }
 
 export default function DropzoneListComponent ({ images, setImages, required, label }: IDropzoneListComponentProps) {
-  const [file, setFile] = useState([])
   const [showAlert, setShowAlert] = useState(false)
 
   const { getRootProps, getInputProps } = useDropzone({
-    maxFiles: 5,
+    maxFiles: 4,
     maxSize: 400000,
     accept: {
       'image/png': ['.png'],
@@ -35,7 +34,7 @@ export default function DropzoneListComponent ({ images, setImages, required, la
 
   return (
     <Box>
-      <Typography fontWeight='bold' display='flex'>{label || 'Imagens'} {true && <Typography color='red'>*</Typography>}</Typography>
+      <Typography fontWeight='bold' display='flex'>{label || `Imagens (${images.length}/4)` } {true && <Typography color='red'>*</Typography>}</Typography>
       <Stack direction='row' gap={1} flexWrap='wrap'>
         {images?.map((image, index) => (
           <Card

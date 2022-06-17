@@ -49,11 +49,11 @@ function Cadastro () {
     }
     api.post('usuario/cadastro', objCadastro)
       .then(res => setAlertSettings({
-        message: res.data.mensagem,
+        message: res.data?.mensagem,
         type: 'success'
       }))
       .catch(err => setAlertSettings({
-        message: err.response.data.mensagem || 'Falha na autenticação!',
+        message: err.response?.data?.mensagem || 'Falha na autenticação!',
         type: 'error'
       }))
       .finally(() => setLoading(false))

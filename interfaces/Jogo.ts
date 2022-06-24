@@ -1,5 +1,4 @@
 import { IGenero } from './Genero'
-import { IUsuario } from './Usuario'
 
 export interface IJogo {
     id: number;

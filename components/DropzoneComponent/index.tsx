@@ -14,7 +14,6 @@ interface IDropzoneComponentProps {
 }
 
 export default function DropzoneComponent ({ image, setImage, required }: IDropzoneComponentProps) {
-  const [file, setFile] = useState([])
   const [showAlert, setShowAlert] = useState(false)
 
   const { getRootProps, getInputProps } = useDropzone({

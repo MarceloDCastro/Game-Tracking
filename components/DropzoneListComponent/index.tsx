@@ -9,7 +9,7 @@ import AlertComponent from '../AlertComponent'
 
 interface IDropzoneListComponentProps {
   images: string[];
-  setImages: React.Dispatch<React.SetStateAction<string[] | undefined>>;
+  setImages: React.Dispatch<React.SetStateAction<string[]>>;
   required?: boolean;
   label?: string;
 }
@@ -50,7 +50,6 @@ export default function DropzoneListComponent ({ images, setImages, required, la
             height: '250px'
           }}
         >
-          {console.log(image)}
                     <CardMedia
                     component="img"
                     image={image.url || image}

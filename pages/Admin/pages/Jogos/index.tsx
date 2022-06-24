@@ -38,7 +38,6 @@ export default function Jogos () {
 
   const [jogos, setJogos] = useState<IJogo[]>([])
   const [generos, setGeneros] = useState<IGenero[]>([])
-  const [jogoVisualizada, setJogoVisualizada] = useState<IJogo>()
   const [selectedJogos, setSelectedJogos] = useState<IJogo[]>([])
 
   const [objJogo, setObjJogo] = useState<Partial<IJogo> | undefined>()

@@ -91,11 +91,11 @@ function Home () {
             : `${totalItems} publicações encontradas`
         }
       </Typography>
-      <Grid container spacing={3} mb={3}>
+      <Grid container spacing={5} mb={3}>
         { loading
           ? <Stack alignItems='center'><CircularProgress size={70} sx={{ my: 5 }} /></Stack>
           : publicacoes?.map((publicacao) => (
-                  <Grid key={publicacao.id} item xs={8} sm={6} md={4} lg={3}>
+                  <Grid key={publicacao.id} item xs={12} sm={6} md={4} lg={3}>
                     <CardComponent
                      id={publicacao.id}
                       titulo={publicacao.titulo}

@@ -15,6 +15,11 @@ type UserInfo = {
     nome: string;
     email: string;
     tipo: number;
+    imagem?: string;
+    telefone?: string;
+    dataNascimeto?: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
   }
 
 type AuthContextData = {

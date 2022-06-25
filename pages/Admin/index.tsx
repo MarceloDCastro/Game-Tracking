@@ -69,7 +69,7 @@ export default function Admin () {
     if (!userInfo || userInfo?.tipo !== 1) {
       router.push('/')
     }
-  }, [])
+  }, [userInfo])
 
   useEffect(() => {
     console.log('route: ', router)

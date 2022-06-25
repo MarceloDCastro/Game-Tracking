@@ -19,7 +19,7 @@ function Login () {
 
   useEffect(() => {
     if (userInfo) router.push('/')
-  })
+  }, [userInfo])
 
   return (
     <Box width='100%' display='flex' justifyContent='center'>

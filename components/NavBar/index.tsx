@@ -43,7 +43,7 @@ const NavBar = () => {
                             <Box>
                                 <IconButton
                                     onClick={handleClickMenu}>
-                                    <Avatar>{userInfo?.nome[0].toUpperCase()}</Avatar>
+                                    <Avatar src={userInfo?.imagem} sx={{ border: '1px solid #b1b1b1' }}>{userInfo?.nome[0].toUpperCase()}</Avatar>
                                 </IconButton>
                                 <Menu
                                 anchorEl={anchorEl}
@@ -80,24 +80,19 @@ const NavBar = () => {
                                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                                 >
-                                    <MenuItem>
-                                      <Stack direction='column'>
-                                        <Typography fontWeight='bold'>{userInfo?.nome}</Typography>
-                                        <Typography fontSize={14} color='text.secondary'>{userInfo?.tipo === 3 ? 'Usuário' : userInfo?.tipo === 2 ? 'Editor' : userInfo?.tipo === '' ? 'Admin' : ''}</Typography>
-                                      </Stack>
-                                    </MenuItem>
-                                    <MenuItem>
-                                      <ListItemIcon>
-                                        <PermIdentityOutlined />
-                                      </ListItemIcon>
-                                      Editar Perfil
-                                    </MenuItem>
-                                    <MenuItem>
-                                      <ListItemIcon>
-                                          <Settings />
-                                      </ListItemIcon>
-                                      Configurações
-                                    </MenuItem>
+                                    <Stack direction='column' paddingX={2} paddingBottom={0.5}>
+                                      <Typography fontWeight='bold'>{userInfo?.nome}</Typography>
+                                      <Typography fontSize={14} color='text.secondary'>{userInfo?.tipo === 3 ? 'Usuário' : userInfo?.tipo === 2 ? 'Editor' : userInfo?.tipo === '' ? 'Admin' : ''}</Typography>
+                                    </Stack>
+                                    <Divider />
+                                    <Link href='/Perfil'>
+                                      <MenuItem>
+                                        <ListItemIcon>
+                                          <PermIdentityOutlined />
+                                        </ListItemIcon>
+                                        Editar Perfil
+                                      </MenuItem>
+                                    </Link>
                                     <MenuItem onClick={signOut}>
                                       <ListItemIcon>
                                           <Logout />

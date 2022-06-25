@@ -10,6 +10,8 @@ import { useContext, useEffect, useState } from 'react'
 import AlertComponent from '../../components/AlertComponent'
 import { AuthContext } from '../../context/AuthContext'
 import { useRouter } from 'next/router'
+import PhoneMask from '../../helpers/PhoneMask'
+import GetOnlyNumbers from '../../helpers/getOnlyNumbers'
 
 function Cadastro () {
   const { userInfo } = useContext(AuthContext)
@@ -34,7 +36,7 @@ function Cadastro () {
 
   useEffect(() => {
     if (userInfo) router.push('/')
-  })
+  }, [userInfo])
 
   useEffect(() => {
     if (alertSettings.message !== '') setShowAlert(true)
@@ -52,7 +54,7 @@ function Cadastro () {
     const objCadastro = {
       nome,
       email,
-      telefone,
+      telefone: GetOnlyNumbers(telefone),
       senha,
       tipo: 3
     }
@@ -73,7 +75,7 @@ function Cadastro () {
       <PageComponent title="Cadastro" sx={{ width: '30%', minWidth: '360px' }}>
         <Stack direction='column' spacing={3}>
           <InputComponent label='Nome' value={nome} onChange={(e) => setNome(e.target.value)} icon={<Badge />} />
-          <InputComponent label='Telefone' value={telefone} onChange={(e) => setTelefone(e.target.value)} icon={<Phone />} />
+          <InputComponent label='Telefone' value={telefone} onChange={(e) => setTelefone(PhoneMask(e.target.value))} icon={<Phone />} />
           <InputComponent label='E-mail' value={email} onChange={(e) => setEmail(e.target.value)} icon={<Mail />} />
           <InputComponent label='Senha' value={senha} onChange={(e) => setSenha(e.target.value)} icon={<Password />} type='password' />
           <InputComponent label='Confirmar senha' value={confirmSenha} onChange={(e) => setConfirmSenha(e.target.value)} icon={<Password />} error={senha !== confirmSenha} type='password' />

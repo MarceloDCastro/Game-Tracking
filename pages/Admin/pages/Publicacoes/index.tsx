@@ -168,6 +168,8 @@ export default function Publicacoes () {
     setLoading(true)
     const objPut = {
       ...objPublicacao,
+      Jogo: objPublicacao?.Jogo?.id,
+      Plataformas: objPublicacao?.Plataformas?.map(p => p.id),
       imagem
     }
     console.log('objPut: ', objPut)

@@ -8,7 +8,7 @@ interface ICardComponent {
     id: number;
     titulo: string;
     descricao: string;
-    data: string;
+    data: Date;
     tipo: string;
     imagem: string;
     link: string;

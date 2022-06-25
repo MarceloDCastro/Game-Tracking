@@ -7,6 +7,10 @@ export interface IJogo {
     dataLancamento: Date;
     Generos: IGenero[];
     imagens: string[];
+    ImagensJogos: {
+        id: number,
+        url: string
+    }[]
 }
 
 export interface IJogoPost {

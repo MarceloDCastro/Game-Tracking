@@ -5,14 +5,14 @@ import {
 import { ArrowUpward, Clear, Search, SearchOutlined } from '@mui/icons-material'
 import PageComponent from '../components/PageComponent'
 import CardComponent from '../components/CardComponent'
-import { IPublicaco } from '../interfaces/Publicacao'
-import { api } from '../services/api'
+import { IPublicacao } from '../interfaces/Publicacao'
+import { api } from '../services/apiClient'
 import { Pallete } from '../context/ThemeContext'
 import InputComponent from '../components/InputComponent'
 
 function Home () {
   const [loading, setLoading] = useState(false)
-  const [publicacoes, setPublicacoes] = useState<IPublicaco[]>()
+  const [publicacoes, setPublicacoes] = useState<IPublicacao[]>()
   const [totalItems, setTotalItems] = useState<number>()
   const [page, setPage] = useState<number>(1)
 
@@ -104,7 +104,6 @@ function Home () {
                       tipo={publicacao.tipo}
                       imagem={publicacao?.imagem}
                       plataformas={publicacao?.Plataformas?.map(p => p.nome)}
-                      link={`Publicacao/${publicacao.nome}`}
                       height='100%'
                     />
                   </Grid>

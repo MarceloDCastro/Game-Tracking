@@ -5,7 +5,7 @@ import InputComponent from '../../../../components/InputComponent'
 import PageComponent from '../../../../components/PageComponent'
 
 import 'react-day-picker/dist/style.css'
-import { api } from '../../../../services/api'
+import { api } from '../../../../services/apiClient'
 import AlertComponent from '../../../../components/AlertComponent'
 import Link from 'next/link'
 import { useAppThemeContext } from '../../../../context/ThemeContext'

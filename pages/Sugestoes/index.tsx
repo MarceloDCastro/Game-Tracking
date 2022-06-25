@@ -9,7 +9,7 @@ import PageComponent from '../../components/PageComponent'
 import TextAreaComponent from '../../components/TextAreaComponent'
 import { AuthContext } from '../../context/AuthContext'
 import { ISugestaoPost } from '../../interfaces/Sugestao'
-import { api } from '../../services/api'
+import { api } from '../../services/apiClient'
 
 function Sugestao () {
   const { userInfo } = useContext(AuthContext)

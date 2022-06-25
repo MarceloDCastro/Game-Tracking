@@ -5,7 +5,7 @@ import { Mail, Phone, Password, Badge, PersonAddAlt } from '@mui/icons-material'
 
 import InputComponent from '../../components/InputComponent'
 import PageComponent from '../../components/PageComponent'
-import { api } from '../../services/api'
+import { api } from '../../services/apiClient'
 import { useEffect, useState } from 'react'
 import AlertComponent from '../../components/AlertComponent'
 

@@ -10,9 +10,10 @@ interface IInputComponent {
     options: {value: string, label: string}[];
     placeholder?: string
     required?: boolean;
+    disabled?: boolean;
 }
 
-const InputComponent = ({ label, icon, value, onChange, error, options, placeholder, required }: IInputComponent) => {
+const InputComponent = ({ label, icon, value, onChange, error, options, placeholder, required, disabled }: IInputComponent) => {
   return (
     <FormControl variant="standard" fullWidth error={error}>
       <InputLabel id="demo-simple-select-standard-label">
@@ -26,6 +27,7 @@ const InputComponent = ({ label, icon, value, onChange, error, options, placehol
         value={value}
         onChange={onChange}
         label="Age"
+        disabled={disabled}
       >
         {
           options?.map(option => (

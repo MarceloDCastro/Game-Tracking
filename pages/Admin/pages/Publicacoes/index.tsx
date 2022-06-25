@@ -395,17 +395,23 @@ export default function Publicacoes () {
           overflowX: 'auto'
         }}>
           <Stack justifyContent='center' alignItems='center' mb={3} pt={3}>
-              <DropzoneComponent image={imagem} setImage={setImagem} required />
+              {modalType !== 'view'
+                ? <DropzoneComponent image={imagem} setImage={setImagem} required />
+                : <img src={imagem} alt={`Imagem da publicação ${objPublicacao?.titulo}`}
+                    style={{ width: '300px' }}
+                  />}
           </Stack>
           <Stack direction={['column', 'row']} gap={[3, '5%']} mb={3}>
-            <InputComponent label='Título' value={objPublicacao?.titulo} onChange={e => setObjPublicacao({ ...objPublicacao, titulo: e.target.value })} icon={<Title />} required />
-            <SelectComponent label='Tipo' value={objPublicacao?.tipo} onChange={e => setObjPublicacao({ ...objPublicacao, tipo: e.target.value })} icon={<InfoOutlined />} required
+            <InputComponent label='Título' value={objPublicacao?.titulo} onChange={e => setObjPublicacao({ ...objPublicacao, titulo: e.target.value })} icon={<Title />} required disabled={modalType === 'view'} />
+            <SelectComponent label='Tipo' value={objPublicacao?.tipo} onChange={e => setObjPublicacao({ ...objPublicacao, tipo: e.target.value })} icon={<InfoOutlined />} required disabled={modalType === 'view'}
             options={tiposPublicacao} />
           </Stack>
           <Stack direction={['column', 'row']} gap={[3, '5%']} mb={3}>
-            <InputComponent label='Link' value={objPublicacao?.link} onChange={e => setObjPublicacao({ ...objPublicacao, link: e.target.value })} icon={<LinkIcon />} required />
-            <InputComponent label='Data' value={objPublicacao?.dataLancamento ? moment(objPublicacao?.dataLancamento).format('DD/MM/YYYY') : ''} icon={<CalendarToday />} required
-            onClick={(e) => setAnchorEl(e.currentTarget)} />
+            <InputComponent label='Link' value={objPublicacao?.link} onChange={e => setObjPublicacao({ ...objPublicacao, link: e.target.value })} icon={<LinkIcon />} required disabled={modalType === 'view'} />
+            <InputComponent label='Data' value={objPublicacao?.dataLancamento ? moment(objPublicacao?.dataLancamento).format('DD/MM/YYYY') : ''} icon={<CalendarToday />} required disabled={modalType === 'view'}
+            onClick={(e) => {
+              if (modalType !== 'view') { setAnchorEl(e.currentTarget) }
+            }} />
             <Popover
               id='dataLancamento'
               open={openDateModal}
@@ -430,7 +436,7 @@ export default function Publicacoes () {
             </Popover>
           </Stack>
           <Stack direction={['column', 'row']} gap={[3, '5%']} mb={3}>
-          <SelectComponent label='Jogo' value={objPublicacao?.Jogo?.id?.toString()} onChange={e => setObjPublicacao({ ...objPublicacao, Jogo: jogos.find(j => j.id === parseInt(e.target.value)) })} icon={<SportsEsports />} required
+          <SelectComponent label='Jogo' value={objPublicacao?.Jogo?.id?.toString()} onChange={e => setObjPublicacao({ ...objPublicacao, Jogo: jogos.find(j => j.id === parseInt(e.target.value)) })} icon={<SportsEsports />} required disabled={modalType === 'view'}
             options={jogos.map(j => ({ value: j.id?.toString(), label: j.nome }))} />
             <FormControl sx={{ width: '100%' }}>
                 <InputLabel id="demo-multiple-chip-label">Plataformas</InputLabel>
@@ -480,7 +486,7 @@ export default function Publicacoes () {
               </FormControl>
           </Stack>
           <Stack direction={['column', 'row']} mb={3}>
-            <TextAreaComponent label='Descrição' value={objPublicacao?.descricao} onChange={e => setObjPublicacao({ ...objPublicacao, descricao: e.target.value })} icon={<Description />} required />
+            <TextAreaComponent label='Descrição' value={objPublicacao?.descricao} onChange={e => setObjPublicacao({ ...objPublicacao, descricao: e.target.value })} icon={<Description />} required disabled={modalType === 'view'} />
           </Stack>
 
           <Stack direction={['column', 'row']} gap={3} justifyContent='center' alignItems='center'>

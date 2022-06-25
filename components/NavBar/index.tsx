@@ -34,7 +34,7 @@ const NavBar = () => {
                         <Link href="/"><Button size="large">Home</Button></Link>
                         <Link href="/Sobre"><Button size="large">Sobre Nós</Button></Link>
                         <Link href="/Sugestoes"><Button size="large">Sugestões</Button></Link>
-                        <Link href="/Admin"><Button size="large">Admin</Button></Link>
+                        {userInfo && userInfo.tipo === 1 && <Link href="/Admin"><Button size="large">Admin</Button></Link>}
                         <Box alignItems='center' display='flex'>
                             <IconButton color='primary' onClick={toggleMode}>{mode === 'light' ? <DarkMode /> : <LightMode />}</IconButton>
                         </Box>

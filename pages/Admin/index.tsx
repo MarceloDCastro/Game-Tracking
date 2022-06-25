@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import DashBoard from './pages/DashBoard'
 import Publicacoes from './pages/Publicacoes'
@@ -10,6 +10,7 @@ import Generos from './pages/Generos'
 import Plataformas from './pages/Plataformas'
 import Sugestoes from './pages/Sugestoes'
 import Jogos from './pages/Jogos'
+import { AuthContext } from '../../context/AuthContext'
 
 interface IPageProps {
   label: string;
@@ -21,6 +22,7 @@ interface IPageProps {
 export default function Admin () {
   const { mode } = useAppThemeContext()
   const router = useRouter()
+  const { userInfo } = useContext(AuthContext)
 
   const [open, setOpen] = React.useState(false)
 
@@ -62,6 +64,12 @@ export default function Admin () {
       icon: <Devices color='primary' />
     }
   ]
+
+  useEffect(() => {
+    if (!userInfo || userInfo?.tipo !== 1) {
+      router.push('/')
+    }
+  }, [])
 
   useEffect(() => {
     console.log('route: ', router)

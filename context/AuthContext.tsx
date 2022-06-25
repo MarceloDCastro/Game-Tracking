@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react'
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import { api } from '../services/apiClient'
 import AlertComponent from '../components/AlertComponent'
@@ -32,6 +32,7 @@ type AuthProviderProps = {
 export const AuthContext = createContext({} as AuthContextData)
 
 export function AuthProvider ({ children }: AuthProviderProps) {
+  const router = useRouter()
   const [userInfo, setUserInfo] = useState<UserInfo|undefined>()
   const isAuthenticated = !!userInfo
 
@@ -80,7 +81,12 @@ export function AuthProvider ({ children }: AuthProviderProps) {
           path: '/'
         })
 
-        api.defaults.headers.common.Authorization = `Bearer ${token}`
+        router.reload()
+        return
+
+        /* eslint-disable */
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        /* eslint-enable */
 
         getUserInfo()
 

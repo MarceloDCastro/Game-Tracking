@@ -5,15 +5,21 @@ import { Mail, Password, Login as LoginIcon } from '@mui/icons-material'
 import InputComponent from '../../components/InputComponent'
 import PageComponent from '../../components/PageComponent'
 import { Box } from '@mui/system'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
+import { useRouter } from 'next/router'
 
 function Login () {
-  const { signIn } = useContext(AuthContext)
+  const { signIn, userInfo } = useContext(AuthContext)
+  const router = useRouter()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (userInfo) router.push('/')
+  })
 
   return (
     <Box width='100%' display='flex' justifyContent='center'>

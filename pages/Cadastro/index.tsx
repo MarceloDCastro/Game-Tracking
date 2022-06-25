@@ -6,10 +6,15 @@ import { Mail, Phone, Password, Badge, PersonAddAlt } from '@mui/icons-material'
 import InputComponent from '../../components/InputComponent'
 import PageComponent from '../../components/PageComponent'
 import { api } from '../../services/apiClient'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import AlertComponent from '../../components/AlertComponent'
+import { AuthContext } from '../../context/AuthContext'
+import { useRouter } from 'next/router'
 
 function Cadastro () {
+  const { userInfo } = useContext(AuthContext)
+  const router = useRouter()
+
   const [nome, setNome] = useState('')
   const [telefone, setTelefone] = useState('')
   const [email, setEmail] = useState('')
@@ -25,6 +30,10 @@ function Cadastro () {
   }>({
     message: '',
     type: 'success'
+  })
+
+  useEffect(() => {
+    if (userInfo) router.push('/')
   })
 
   useEffect(() => {

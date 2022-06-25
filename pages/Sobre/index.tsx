@@ -9,19 +9,23 @@ function Sobre () {
 
       <Grid className="form-sobre" container spacing={2}>
         <Grid md={12} xs={12} item >
-            <Typography variant="body2" className="p-sobre" align="left" pb={1} >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean facilisis turpis vitae leo egestas, sit amet ultricies dui rutrum. Nulla auctor nulla ut sapien bibendum, ut tincidunt orci eleifend. Fusce et mollis erat. Duis lobortis ante a quam pharetra, nec vestibulum est laoreet. Nunc efficitur non mi placerat tristique. Proin eget elit non arcu bibendum dignissim id vel metus. Pellentesque porttitor facilisis nulla, ut aliquam dui ornare vel. Aenean gravida erat eget nisi tempor, eu ultrices augue posuere. Vivamus hendrerit mollis turpis, quis gravida leo malesuada in.
+            <Typography variant="body1" className="p-sobre" align="left" pb={3} >
+              Um grupo formado por 3 alunos da Fatec Rubens Lara teve uma ideia para um projeto... Que era desenvolver um site intuitivo de fácil navegação que auxilie pessoas na busca por jogos gratuitos ou em promoção e lançamentos, provendo informações sobre eles.
             </Typography>
-        </Grid>
-
-        <Grid md={12} xs={12} item >
-
-            <Typography variant="body2" className="p-sobre" align="left" pb={1} >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean facilisis turpis vitae leo egestas, sit amet ultricies dui rutrum. Nulla auctor nulla ut sapien bibendum, ut tincidunt orci eleifend. Fusce et mollis erat. Duis lobortis ante a quam pharetra, nec vestibulum est laoreet. Nunc efficitur non mi placerat tristique. Proin eget elit non arcu bibendum dignissim id vel metus. Pellentesque porttitor facilisis nulla, ut aliquam dui ornare vel. Aenean gravida erat eget nisi tempor, eu ultrices augue posuere. Vivamus hendrerit mollis turpis, quis gravida leo malesuada in.
+            <Typography variant="body1" className="p-sobre" align="left" pb={3} >
+            Devido a ausência de sites que fossem focados apenas nesta divulgação. Os grandes portais de notícias de tecnologia e jogos divulgam apenas  títulos de desenvolvedoras de grande porte
+            </Typography>
+            <Typography variant="body1" className="p-sobre" align="left" pb={3} >
+            Uma ferramenta já existente com propósito similar proposto pelo projeto é o GX Corner, que é um recurso presente no navegador Opera GX, porém o mesmo é pouco conhecido.
+            </Typography>
+            <Typography variant="body1" className="p-sobre" align="left" pb={3} >
+            Então o GameTracking foi criado.
+            </Typography>
+            <Typography variant="body1" className="p-sobre" align="left" pb={3} >
+            A equipe GameTracking é formada por: Breno Lins, Marcelo de Castro e Gabriel de Almeida
             </Typography>
         </Grid>
       </Grid>
-
     </PageComponent>
 
   )

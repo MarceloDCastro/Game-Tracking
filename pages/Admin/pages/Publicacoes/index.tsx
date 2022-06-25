@@ -259,8 +259,8 @@ export default function Publicacoes () {
       <Typography my={1}>
         {
           !publicacoes?.length
-            ? 'Nenhum publicação encontrado'
-            : `${totalItems} publicações encontrados`
+            ? 'Nenhuma publicação encontrado'
+            : `${totalItems} publicações encontradas`
         }
           {selectedPublicacoes.length ? `, ${selectedPublicacoes.length} publicações selecionadas` : ''}
       </Typography>

@@ -7,7 +7,7 @@ function Sobre () {
   return (
     <PageComponent title="Sobre Nós">
 
-      <Grid className="form-sobre" container spacing={2}>
+      <Grid className="form-sobre" container spacing={2} mt={2}>
         <Grid md={12} xs={12} item >
             <Typography variant="body1" className="p-sobre" align="left" pb={3} >
               Um grupo formado por 3 alunos da Fatec Rubens Lara teve uma ideia para um projeto... Que era desenvolver um site intuitivo de fácil navegação que auxilie pessoas na busca por jogos gratuitos ou em promoção e lançamentos, provendo informações sobre eles.

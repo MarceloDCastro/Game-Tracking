@@ -2,6 +2,7 @@ import React from 'react'
 import { Stack, Typography, Button } from '@mui/material'
 import styles from '../../styles/Geral.module.css'
 import { useAppThemeContext, Pallete } from '../../context/ThemeContext'
+import Link from 'next/link'
 
 const Footer = () => {
   const { mode } = useAppThemeContext()
@@ -14,9 +15,9 @@ const Footer = () => {
 
                 <Stack alignItems="center">
                     <Typography fontWeight='bold'>Mapa do site</Typography>
-                    <Button>Home</Button>
-                    <Button>Sobre Nós</Button>
-                    <Button>Sugestões</Button>
+                    <Link href='/'><Button>Home</Button></Link>
+                    <Link href='/Sobre'><Button>Sobre Nós</Button></Link>
+                    <Link href='/Sugestoes'><Button>Sugestões</Button></Link>
                 </Stack>
             </Stack>
   )

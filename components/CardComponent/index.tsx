@@ -5,6 +5,7 @@ import moment from 'moment'
 import 'moment/locale/pt'
 
 interface ICardComponent {
+    id: number;
     titulo: string;
     descricao: string;
     data: string;
@@ -18,7 +19,7 @@ interface ICardComponent {
     height?: string;
 }
 
-const CardComponent = ({ titulo, descricao, data, tipo, imagem, link, plataformas, width, maxWidth, minWidth, height }: ICardComponent) => {
+const CardComponent = ({ titulo, descricao, data, tipo, imagem, id, plataformas, width, maxWidth, minWidth, height }: ICardComponent) => {
   return (
     <Card sx={{ borderRadius: 3, boxShadow: '0 3px 5px #00000040', height: height, width: width, maxWidth: maxWidth, minWidth: minWidth }}>
       <CardMedia
@@ -55,7 +56,7 @@ const CardComponent = ({ titulo, descricao, data, tipo, imagem, link, plataforma
           <Typography color="text.secondary" gutterBottom>
               {data && moment(data).locale('pt-br').fromNow()}
             </Typography>
-            <Button variant='contained' href={link} fullWidth sx={{ mt: 1 }}>Ver Mais</Button>
+            <Button variant='contained' href={`/Publicacao/${id}`} fullWidth sx={{ mt: 1 }}>Ver Mais</Button>
           </Box>
         </Stack>
       </CardContent>

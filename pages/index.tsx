@@ -97,6 +97,7 @@ function Home () {
           : publicacoes?.map((publicacao) => (
                   <Grid key={publicacao.id} item xs={8} sm={6} md={4} lg={3}>
                     <CardComponent
+                     id={publicacao.id}
                       titulo={publicacao.titulo}
                       descricao={publicacao.descricao}
                       data={publicacao.dataLancamento}
